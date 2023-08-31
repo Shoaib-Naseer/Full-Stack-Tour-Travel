@@ -9,7 +9,7 @@ const Testimonials = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 1000,
+        speed: 3000,
         swipeToSlide: true,
         autoplay: true,
       speed: 5000,
