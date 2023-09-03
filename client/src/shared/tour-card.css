@@ -49,6 +49,17 @@
     font-size: 1.1rem;
     cursor: pointer;
 }
+@media (min-width:968px) {
+    .tour__title{
+        min-height: 43px;
+    }
+}
+
+@media (min-width:1200px) {
+    .tour__title{
+        min-height: unset;
+    }
+}
 
 .tour__title a {
     text-decoration: none;

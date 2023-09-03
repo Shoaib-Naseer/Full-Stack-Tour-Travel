@@ -94,7 +94,7 @@ const Home = () => {
               <motion.div
                 ref={serviceRef}
                 initial={{ x: -150 }} // Initial position (left side of the screen)
-                animate={{ x: serviceInView ? 0 : -150 }} // Animate to default (0) when inView is true
+                animate={{ x: serviceInView ? 0 : 0 }} // Animate to default (0) when inView is true
                 transition={{ duration: .5 , type:'spring' , stiffness:120 }}>
                 <h5 className="services_subtitle">What we serve</h5>
                 <h2 className="services__title">We Offer our best services</h2>
@@ -142,7 +142,7 @@ const Home = () => {
                   Dolor possimus cumque eius dolorem corrupti saepe quaerat minima.
                 </p>
 
-                <div className="counter__wrapper | d-flex gap-4 align-items-center">
+                <div className="counter__wrapper | d-flex gap-sm-4 align-items-center">
                   <div className="counter__box">
                     <span>12K+</span>
                     <h6>Successful trips</h6>

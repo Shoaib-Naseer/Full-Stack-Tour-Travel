@@ -20,9 +20,9 @@ const Searchbar = () => {
 
   return (
     <Col lg="12">
-      <div className="search__bar">
-        <Form className="d-flex align-items-center gap-4 p-2">
-          <div className="d-flex gap-3 form__group form__group-fast " >
+      <div className="search__bar ">
+        <Form className="d-md-flex align-items-md-center lg:gap-4 lg:p-2">
+          <div className="d-flex gap-3 form__group form__group-fast mb-4 mb-md-0 " >
             <span>
               <i className="ri-map-pin-line"></i>
             </span>
@@ -32,7 +32,7 @@ const Searchbar = () => {
             </div>
           </div>
 
-          <div className="d-flex gap-3 form__group form__group-fast " >
+          <div className="d-flex gap-3 form__group form__group-fast mb-4 mb-md-0 " >
             <span>
               <i className="ri-map-pin-line"></i>
             </span>
@@ -42,7 +42,7 @@ const Searchbar = () => {
             </div>
           </div>
 
-          <div className="d-flex gap-3 form__group form__group-fast " >
+          <div className="d-flex gap-3 form__group form__group-fast mb-4 mb-md-0 " >
             <span>
               <i className="ri-group-line"></i>
             </span>

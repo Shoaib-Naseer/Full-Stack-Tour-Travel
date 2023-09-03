@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Container, Row, Button } from 'reactstrap';
 import { NavLink, Link } from 'react-router-dom';
 
@@ -6,6 +6,11 @@ import logo from '../../assets/images/logo.png';
 import './header.css';
 
 const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   const headerRef = useRef(null)
 
@@ -40,9 +45,9 @@ const Header = () => {
   ];
   return (
     <header className="header" ref={headerRef}>
-      <Container>
+      <Container >
         <Row>
-          <div className="nav__wrapper | d-flex align-items-center justify-content-between gap-4">
+          <div className="nav__wrapper | d-flex align-items-center justify-content-between gap-sm-2 gap-md-4">
             {/* ============= logo ============= */}
 
             <div className="logo">
@@ -52,7 +57,7 @@ const Header = () => {
             {/* ============== Logo End =========*/}
 
             {/* ============= Menu Start ============ */}
-            <div className="navigation">
+            <div className="navigation | d-none d-md-block">
               <ul className="menu | d-flex align-items-center gap-5">
                 {nav__links.map((item, index) => (
                   <li className="nav_item" key={index}>
@@ -68,7 +73,7 @@ const Header = () => {
             </div>
             {/* ============= Menu End ============ */}
 
-            <div className="nav_right | d-flex align-items-center gap-4">
+            <div className="nav_right | d-none d-md-flex align-items-center gap-4">
               <div className="nav_btns | d-flex align-items-center gap-4">
                 <Button className="btn primary__btn">
                   <Link to="/login">Login</Link>
@@ -80,10 +85,38 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="mobile__menu">
+            <div className="mobile__menu | d-block d-md-none" onClick={toggleMobileMenu}>
               <i className="ri-menu-line"></i>
             </div>
           </div>
+
+          <div className={`mobile__navigation d-md-none ${isMobileMenuOpen ? 'active' : ''}`}>
+          <div className="mobile__menu-list | p-0 m-0 d-flex flex-column">
+            {nav__links.map((item, index) => (
+              <div className="mobile__nav_item | p-0 m-0" key={index}>
+                <NavLink
+                 onClick={toggleMobileMenu}
+                  to={item.path}
+                  className={(navClass) => (navClass.isActive ? 'mobile__active__link' : '')}
+                >
+                  {item.display}
+                </NavLink>
+
+                
+              </div>
+            ))}
+            <div className="nav_btns | d-flex flex-column gap-4 my-4">
+                <Button className="btn primary__btn" >
+                  <Link onClick={toggleMobileMenu} to="/login">Login</Link>
+                </Button>
+
+                <Button className="btn secondary__btn ">
+                  <Link onClick={toggleMobileMenu} to="/register">Register</Link>
+                </Button>
+              </div>
+          </div>
+        </div>
+
         </Row>
       </Container>
     </header>

@@ -14,7 +14,7 @@ const NewsLetter = () => {
               <h2>
                 Subscribe now to get useful traveling information
               </h2>
-              <div className="newsletter__form | d-flex justify-content-between align-items-center gap-2">
+              <div className="newsletter__form | d-sm-flex justify-sm-content-between align-items-center gap-2">
                 <input type="email" placeholder="Enter your Email" />
                 <span className="newsletter__btn">Subscribe</span>
               </div>

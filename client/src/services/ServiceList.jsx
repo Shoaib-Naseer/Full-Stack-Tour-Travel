@@ -40,7 +40,7 @@ const ServiceList = () => {
           return (
             <Col lg="3">
               <motion.div
-                key={index}
+                key={item.title}
                 ref={ref}
                 initial={{ opacity: 0, y: -20 }} // Initial opacity and y position (fade-in from below)
                 animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }} // Fade-in when inView is true

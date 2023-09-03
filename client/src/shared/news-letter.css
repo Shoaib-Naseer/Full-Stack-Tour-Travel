@@ -30,6 +30,19 @@
     font-size: 1rem;
     color: var(--heading-color);
 }
+
+@media (max-width:400px) {
+    .newsletter__form {
+        background-color: unset !important;
+    }
+    
+    .newsletter__form input {
+        width: 100%;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        padding: .5rem ;
+    }
+}
 .newsletter__form input:focus-visible{
     outline: none;
 }

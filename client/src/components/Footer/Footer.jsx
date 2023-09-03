@@ -79,7 +79,7 @@ const Footer = () => {
 
             </div>
           </Col>
-          <Col lg='3' className='mt-4 mt-lg-0'>
+          <Col sm='6' lg='3' className='mt-4 mt-lg-0'>
             <h5 className="footer__link-title">
               Discover
             </h5>
@@ -92,7 +92,7 @@ const Footer = () => {
 
             </ListGroup>
           </Col>
-          <Col lg='3' className='mt-4 mt-lg-0'>
+          <Col sm='6' lg='3' className='mt-4 mt-lg-0'>
           <h5 className="footer__link-title">
               Quick Links
             </h5>

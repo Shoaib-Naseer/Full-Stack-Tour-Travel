@@ -10,7 +10,7 @@ const TourCard = ({ tour }) => {
   console.log(totalRating,avgRating )
 
   return (
-    <div className="tour__card">
+    <div className="tour__card | mb-4">
       <Card>
         <div className="tour__img">
           <img src={photo} alt="tour-img" />
@@ -34,7 +34,7 @@ const TourCard = ({ tour }) => {
             <Link to={`/tours/${id}`}>{title}</Link>
           </h5>
 
-          <div className="card-bottom | d-flex align-items-center justify-content-between mt-3">
+          <div className="card-bottom | lg:d-flex lg:align-items-center lg:justify-content-between mt-3">
             <h5>
               ${price} <span> /per person</span>
             </h5>

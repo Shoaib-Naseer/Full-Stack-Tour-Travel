@@ -1,0 +1,18 @@
+.thankyou__section > .row{
+    margin-inline: 0 !important;
+}
+
+.thank__you span i {
+    font-size: 4rem;
+    color: green;
+}
+
+.thank__you h1 {
+    font-size: 3.6rem;
+    font-family: var(--subtitle-font-name);
+    font-weight: bold;
+}
+
+.thank__you button {
+    width: 15rem !important;
+}

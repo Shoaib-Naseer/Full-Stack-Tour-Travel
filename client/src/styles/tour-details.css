@@ -5,7 +5,8 @@
 
 }
 
-.tour__info , .tour__reviews {
+.tour__info,
+.tour__reviews {
     border-radius: .5rem;
     border: 1px solid var(--newsletter-color);
     padding: 2rem;
@@ -23,12 +24,12 @@
     color: var(--text-color);
 }
 
-.tour__info span i{
+.tour__info span i {
     color: var(--heading-color);
     font-size: 1.1;
 }
 
-.tour__extra-details  {
+.tour__extra-details {
     column-gap: 2.7rem;
     margin-top: 1rem;
     margin-bottom: 2.5rem;
@@ -49,20 +50,29 @@
     display: flex;
     align-items: center;
     font-size: 1.1rem;
-    color: var(--secondary-color);
     cursor: pointer;
+    transition: all .3s;
+}
+
+.rating__star.hovered {
+    color: var(--secondary-color);
+}
+
+.rating__star.colorized {
+    color: var(--secondary-color);
 }
 
 .tour__reviews h4 {
     margin-bottom: 3rem;
 }
 
-.review__input input , .review__input input:focus  {
+.review__input input,
+.review__input input:focus {
     border: none;
     outline: none;
 }
 
-.review__input input{
+.review__input input {
     width: 100%;
     padding: .5rem 0;
 }
@@ -72,16 +82,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .5rem 1rem;
+    padding-left: 1rem;
     width: 100%;
     border: 1px solid var(--secondary-color);
     border-radius: 2rem;
 }
+
 .user__reviews {
     margin-top: 2rem;
 }
 
-.user__reviews h5{
+.user__reviews h5 {
     font-size: 1rem;
     margin-bottom: 0;
 }
@@ -93,17 +104,17 @@
     margin-bottom: 2rem;
 }
 
-.review__item p{
+.review__item p {
     font-size: .9rem;
     color: var(--text-color);
 }
 
-.review__item h6{
+.review__item h6 {
     font-size: 1.1rem;
     color: var(--text-color);
 }
 
-.review__item span i{
+.review__item span i {
     font-size: 1.2rem;
     color: var(--secondary-color);
 }
