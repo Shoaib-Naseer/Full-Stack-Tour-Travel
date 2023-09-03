@@ -79,6 +79,13 @@
     color: var(--text-color);
  }
 
+ @media (min-width:768px) {
+    .masonry__img:hover {
+        transform: scale(1.1);
+     }
+    
+ }
+
  .experience__img img {
     width: 90%;
  }
@@ -89,6 +96,3 @@
     cursor: pointer;
  }
 
- .masonry__img:hover {
-    transform: scale(1.1);
- }
