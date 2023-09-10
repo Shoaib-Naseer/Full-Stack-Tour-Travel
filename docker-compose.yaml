@@ -38,34 +38,33 @@ services:
     # env_file:
     #   - ./env/client.env
 
-  # adminer:
-  #   networks:
-  #     - booking-app
-  #   image: adminer:latest
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
-  #   depends_on:
-  #     - dbPostgres
+  adminer:
+    networks:
+      - booking-app
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - dbPostgres
 
-  # dbPostgres:
-  #   networks:
-  #     - booking-app
-  #   image: postgres:10
-  #   container_name: dbPostgres
-  #   restart: always
-  #   ports:
-  #     - 5432:5432
-  #   env_file:
-  #     - ./env/server.env
-  #   environment:
-  #     - POSTGRES_USER=${DEV_DB_USER}
-  #     - POSTGRES_PASSWORD=${DEV_DB_PASS}
-  #     - POSTGRES_DB=${DEV_DB_DB}
-  #     - POSTGRES_DB_TEST=${TEST_DB_DB}
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #     - postgres_init:/docker-entrypoint-initdb.d
+  dbPostgres:
+    networks:
+      - booking-app
+    image: postgres:10
+    container_name: dbPostgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - ./server/.env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_init:/docker-entrypoint-initdb.d
 
 
 # volumes for mapping data, config, and log

@@ -1,28 +1,43 @@
-import mongoose from "mongoose";
-
-const reviewSchema = new mongoose.Schema(
-  {
-    productId: {
-      type: mongoose.Types.ObjectId,
-      ref: "Tour",
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    reviewText: {
-      type: String,
-      required: true,
+// models/Review.js
+module.exports = (sequelize, DataTypes) => {
+  const Review = sequelize.define("Review", {
+    review_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     rating: {
-      type: Number,
-      required: true,
-      min: 0,
-      max: 5,
-      default: 0,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 1,
+        max: 5,
+      },
     },
-  },
-  { timestamps: true }
-);
+    tour_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    comment: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+  });
 
-export default mongoose.model("Review", reviewSchema);
+  Review.associate = function (models) {
+    Review.belongsTo(models.Tour, {
+      foreignKey: "tour_id",
+      onDelete: "CASCADE", // Adjust the deletion behavior as needed
+    });
+    Review.belongsTo(models.User, {
+      foreignKey: "user_id",
+      onDelete: "CASCADE", // Adjust the deletion behavior as needed
+    });
+  };
+
+  return Review;
+};

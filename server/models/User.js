@@ -1,32 +1,60 @@
-import mongoose from "mongoose";
-
-const userSchema = new mongoose.Schema(
-  {
+module.exports = (Sequelize, DataTypes) => {
+  const User = Sequelize.define("User", {
+    user_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     username: {
-      type: String,
-      required: true,
-      unique: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     email: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
     },
     password: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-
-    photo: {
-      type: String,
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-
-    role: {
-      type: String,
-      default: "user",
+    birthdate: {
+      type: DataTypes.DATE,
+      allowNull: false,
     },
-  },
-  { timestamps: true }
-);
+    location: {
+      type: DataTypes.STRING,
+    },
+    registrationDate: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    last_login: {
+      type: DataTypes.DATE,
+    },
+    profile_image: {
+      type: DataTypes.STRING,
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  });
 
-export default mongoose.model("User", userSchema);
+  User.associate = function (models) {
+    User.belongsToMany(models.Interest, {
+      through: "User_Interests",
+      foreignKey: "user_id",
+      otherKey: "interest_id",
+    });
+    User.belongsTo(models.Role, {
+      foreignKey: "role_id",
+      onDelete: "CASCADE",
+    });
+  };
+  return User;
+};
