@@ -6,18 +6,18 @@
   "scripts": {
     "start": "node index",
     "dev": "nodemon index",
-    "db" : "sequelize-cli db:seed:all",
+    "db": "sequelize-cli db:seed:all",
     "lint": "eslint .",
     "lint:fix": "prettier --write . eslint --ignore-path .gitignore . --fix",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@fastify/swagger": "^8.10.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "fastify": "^4.22.2",
-    "fastify-swagger": "^5.2.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
