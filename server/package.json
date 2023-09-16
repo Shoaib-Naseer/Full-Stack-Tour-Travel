@@ -1,28 +1,34 @@
 {
-  "name": "backend",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index",
-    "db": "sequelize-cli db:seed:all",
-    "lint": "eslint .",
+    "start": "node server",
+    "dev": "nodemon server",
+    "db": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "seed": "npx sequelize-cli db:seed:all",
+    "lint": "prettier --write . && eslint --ignore-path .gitignore . --fix",
     "lint:fix": "prettier --write . eslint --ignore-path .gitignore . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
     "@fastify/swagger": "^8.10.0",
+    "@fastify/swagger-ui": "^1.9.3",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "fastify": "^4.22.2",
+    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1",
-    "sequelize-cli": "^6.6.1"
+    "sequelize-cli": "^6.6.1",
+    "supertest": "^6.3.3"
   },
   "devDependencies": {
     "eslint": "^8.48.0",

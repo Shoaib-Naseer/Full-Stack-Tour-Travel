@@ -21,8 +21,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   // Define associations
-  Payment.associate = function (models) {
-    
-  };
+  Payment.associate = function (models) {};
   return Payment;
 };

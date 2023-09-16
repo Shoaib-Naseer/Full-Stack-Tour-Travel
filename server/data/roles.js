@@ -2,12 +2,12 @@
 const rolesData = [
   {
     name: "admin",
-    createdAt: new Date(), 
+    createdAt: new Date(),
     updatedAt: new Date(),
   },
   {
     name: "user",
-    createdAt: new Date(), 
+    createdAt: new Date(),
     updatedAt: new Date(),
   },
 ];

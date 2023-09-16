@@ -1,11 +1,11 @@
-const categoryService = require('../services/categoryService');
+const categoryService = require("../services/categoryService");
 
 async function getAllCategories(req, reply) {
   try {
     const categories = await categoryService.getAllCategories();
     reply.send(categories);
   } catch (error) {
-    reply.status(400).send({ error: 'Failed to fetch categories' });
+    reply.status(400).send({ error });
   }
 }
 
@@ -16,11 +16,12 @@ async function createCategory(req, reply) {
     const category = await categoryService.createCategory(name);
     reply.status(201).send(category);
   } catch (error) {
-    reply.status(400).send({ error: 'Failed to create category' });
+    reply.status(400).send({ error });
   }
 }
 
 async function updateCategory(req, reply) {
+  console.log(req.body)
   const { id } = req.params;
   const { name } = req.body;
 
@@ -28,50 +29,50 @@ async function updateCategory(req, reply) {
     const isUpdated = await categoryService.updateCategory(id, name);
 
     if (isUpdated) {
-      reply.send({ message: 'Category updated successfully' });
+      reply.send({ message: "Category updated successfully" });
     } else {
-      reply.status(404).send({ error: 'Category not found' });
+      reply.status(404).send({ error: "Category not found" });
     }
   } catch (error) {
-    reply.status(400).send({ error: 'Failed to update category' });
+    reply.status(400).send({ error });
   }
 }
 
 async function getCategory(req, reply) {
-    const { id } = req.params;
-  
-    try {
-      const category = await categoryService.getCategory(id);
-  
-      if (category) {
-        reply.send(category);
-      } else {
-        reply.status(404).send({ error: 'Category not found' });
-      }
-    } catch (error) {
-      reply.status(400).send({ error: 'Failed to Find category' });
-    }
-  }
+  const { id } = req.params;
 
-  async function deleteCategory(req, reply) {
-    const { id } = req.params;
-    try {
-        const category = await categoryService.getCategory(id);
-        if (category) {
-          const message = await categoryService.deleteCategory(id)
-          reply.send(message)
-        } else {
-          reply.status(404).send({ error: 'Category not found' });
-        }
-      } catch (error) {
-        reply.status(400).send({ error: 'Failed to Find category' });
-      }
+  try {
+    const category = await categoryService.getCategory(id);
+
+    if (category) {
+      reply.send(category);
+    } else {
+      reply.status(404).send({ error: "Category not found" });
+    }
+  } catch (error) {
+    reply.status(400).send({ error: "Failed to Find category" });
   }
+}
+
+async function deleteCategory(req, reply) {
+  const { id } = req.params;
+  try {
+    const category = await categoryService.getCategory(id);
+    if (category) {
+      const message = await categoryService.deleteCategory(id);
+      reply.send(message);
+    } else {
+      reply.status(404).send({ error: "Category not found" });
+    }
+  } catch (error) {
+    reply.status(400).send({ error: "Failed to Find category" });
+  }
+}
 
 module.exports = {
   getAllCategories,
   createCategory,
   updateCategory,
   getCategory,
-  deleteCategory
+  deleteCategory,
 };

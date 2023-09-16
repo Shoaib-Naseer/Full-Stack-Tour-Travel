@@ -1,21 +1,25 @@
 // routes/categoryRoutes.js
-const categoryController = require('../controllers/categoryController');
+const config = require("../config");
+const helper = require('./helper')
+const categoryController = require("../controllers/categoryController");
 
 const Category = {
-  type: 'object',
+  type: "object",
   properties: {
-    name: { type: 'string' },
+    name: { type: "string" },
   },
-  required: ['name'],
+  required: ["name"],
 };
+
 
 const getCategories = {
   schema: {
     response: {
       200: {
-        type: 'array',
+        type: "array",
         categories: Category,
       },
+      400:helper.errorMessage
     },
   },
   handler: categoryController.getAllCategories,
@@ -26,6 +30,7 @@ const createCategory = {
     body: Category,
     response: {
       201: Category,
+      400:helper.errorMessage
     },
   },
   handler: categoryController.createCategory,
@@ -34,39 +39,68 @@ const createCategory = {
 const updateCategory = {
   schema: {
     params: {
-      type: 'object',
+      type: "object",
       properties: {
-        id: { type: 'integer' }, 
+        id: { type: "integer" },
       },
     },
     body: Category,
     response: {
-      200: Category, 
+      200: Category,
+      404: helper.errorMessage,
+      400: helper.errorMessage,
     },
   },
   handler: categoryController.updateCategory,
 };
 
 const getCategory = {
-    schema: {
-      params: {
-        type: 'object',
-        properties: {
-          id: { type: 'integer' }, 
-        },
-      },
-      response: {
-        200: Category, 
+  schema: {
+    params: {
+      type: "object",
+      properties: {
+        id: { type: "integer" },
       },
     },
-    handler: categoryController.getCategory,
-  };
+    response: {
+      200: Category,
+      404:helper.errorMessage,
+      400: helper.errorMessage,
+    },
+  },
+  handler: categoryController.getCategory,
+};
+
+const deleteCategory = {
+  schema: {
+    params: {
+      type: "object",
+      properties: {
+        id: { type: "integer" },
+      },
+    },
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+      },
+      404:helper.errorMessage,
+    },
+  },
+  handler: categoryController.deleteCategory,
+};
 
 function categoryRoutes(fastify, options, done) {
-  fastify.get('/categories', getCategories);
-  fastify.post('/categories', createCategory);
-  fastify.get('/categories/:id', getCategory);
-  fastify.put('/categories/:id', updateCategory);
+  fastify.get(`${config.app.apiPath}categories`, getCategories);
+  fastify.post(`${config.app.apiPath}categories`, createCategory);
+  fastify.get(`${config.app.apiPath}categories/:id`, getCategory);
+  fastify.put(`${config.app.apiPath}categories/:id`, updateCategory);
+  fastify.delete(
+    `${config.app.apiPath}categories/categories/:id`,
+    deleteCategory,
+  );
 
   done();
 }

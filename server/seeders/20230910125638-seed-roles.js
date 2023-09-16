@@ -8,7 +8,9 @@ module.exports = {
     const startingPrimaryKeyValue = 1; // You can adjust this value as needed
 
     // Truncate the "Roles" table to reset primary key increments
-    await queryInterface.sequelize.query(`TRUNCATE TABLE "Roles" RESTART IDENTITY CASCADE`);
+    await queryInterface.sequelize.query(
+      `TRUNCATE TABLE "Roles" RESTART IDENTITY CASCADE`,
+    );
 
     // Insert data with the specified starting primary key value
     await queryInterface.bulkInsert(
@@ -17,12 +19,14 @@ module.exports = {
         ...role,
         role_id: startingPrimaryKeyValue + index,
       })),
-      {}
+      {},
     );
   },
 
   async down(queryInterface, Sequelize) {
     // Truncate the "Roles" table to reset primary key increments
-    await queryInterface.sequelize.query(`TRUNCATE TABLE "Roles" RESTART IDENTITY CASCADE`);
+    await queryInterface.sequelize.query(
+      `TRUNCATE TABLE "Roles" RESTART IDENTITY CASCADE`,
+    );
   },
 };
