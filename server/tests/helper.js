@@ -1,9 +1,7 @@
 const config = require("../config");
-const getServer = require("../app");
+const fastify = require("../server");
 
-let app = getServer();
-let request;
-
+let app = fastify;
 
 exports.get_request = async (data) => {
   return await app.inject({
@@ -89,7 +87,7 @@ exports.put_request = async (data) => {
     return app.inject({
       method: 'PUT',
       url: `${config.app.apiPath}${data.endpoint}`,
-      payload: data.params,
+      payload: data.body,
     });
   } catch (error) {
     console.error(error);

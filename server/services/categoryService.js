@@ -9,20 +9,27 @@ async function createCategory(name) {
 }
 
 async function updateCategory(id, name) {
-  const [updatedRows] = await Category.update(
+  const [, updatedRows] = await Category.update(
     { name },
-    { where: { category_id: id } },
+    { where: { category_id: id }, returning: true }
   );
-  return updatedRows > 0;
+
+  if (updatedRows.length > 0) {
+    const updatedCategory = updatedRows[0].get({ plain: true });
+    return updatedCategory;
+  } else {
+    return null;
+  }
 }
 
+
 async function getCategory(id) {
-  const category = await Category.findOne({ where: { category_id: id } });
+  let category = await Category.findOne({ where: { category_id: id } });
   return category;
 }
 
 async function deleteCategory(id) {
-  const category = await Category.findByPk(id);
+  const category = await Category.findOne({ where: { category_id: id } });
   await category.destroy();
   return category;
 }

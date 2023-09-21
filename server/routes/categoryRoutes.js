@@ -1,6 +1,6 @@
 // routes/categoryRoutes.js
 const config = require("../config");
-const helper = require('./helper')
+const helper = require("./helper");
 const categoryController = require("../controllers/categoryController");
 
 const Category = {
@@ -8,18 +8,13 @@ const Category = {
   properties: {
     name: { type: "string" },
   },
-  required: ["name"],
+  required: ["name"]
 };
-
 
 const getCategories = {
   schema: {
     response: {
-      200: {
-        type: "array",
-        categories: Category,
-      },
-      400:helper.errorMessage
+      400: helper.errorMessage,
     },
   },
   handler: categoryController.getAllCategories,
@@ -27,10 +22,9 @@ const getCategories = {
 
 const createCategory = {
   schema: {
-    body: Category,
+    body:Category,
     response: {
-      201: Category,
-      400:helper.errorMessage
+      400: helper.errorMessage,
     },
   },
   handler: categoryController.createCategory,
@@ -46,7 +40,6 @@ const updateCategory = {
     },
     body: Category,
     response: {
-      200: Category,
       404: helper.errorMessage,
       400: helper.errorMessage,
     },
@@ -63,8 +56,7 @@ const getCategory = {
       },
     },
     response: {
-      200: Category,
-      404:helper.errorMessage,
+      404: helper.errorMessage,
       400: helper.errorMessage,
     },
   },
@@ -80,13 +72,7 @@ const deleteCategory = {
       },
     },
     response: {
-      200: {
-        type: "object",
-        properties: {
-          message: { type: "string" },
-        },
-      },
-      404:helper.errorMessage,
+      404: helper.errorMessage,
     },
   },
   handler: categoryController.deleteCategory,
@@ -98,7 +84,7 @@ function categoryRoutes(fastify, options, done) {
   fastify.get(`${config.app.apiPath}categories/:id`, getCategory);
   fastify.put(`${config.app.apiPath}categories/:id`, updateCategory);
   fastify.delete(
-    `${config.app.apiPath}categories/categories/:id`,
+    `${config.app.apiPath}categories/:id`,
     deleteCategory,
   );
 

@@ -1,16 +1,18 @@
-const fastify = require("fastify")();
+let fastify;
 const cors = require("cors");
 const config = require("./config");
 const userRoutes = require("./routes/users");
 const db = require("./models");
 const categoryRoutes = require("./routes/categoryRoutes");
-const interestsRoutes = require("./routes/InterestsRoute");
+const interestsRoutes = require("./routes/interestsRoute");
+const toursRoutes = require("./routes/tourRoutes");
+const imageRoutes = require("./routes/imageRoute");
 
 const fastifySwagger = require("@fastify/swagger");
 const fastifySwaggerUi = require("@fastify/swagger-ui");
 const authRoutes = require("./routes/authRoutes");
 
-const app = require("fastify")();
+fastify = require("fastify")();
 
 const swaggerOptions = {
   swagger: {
@@ -32,18 +34,28 @@ const swaggerUiOptions = {
   exposeRoute: true,
 };
 
+
+
 const port = config.port || 8000;
 
-fastify.register(authRoutes);
-fastify.register(categoryRoutes);
-fastify.register(interestsRoutes);
-app.register(fastifySwagger, swaggerOptions);
-app.register(fastifySwaggerUi, swaggerUiOptions);
+fastify.register(fastifySwagger, swaggerOptions);
+fastify.register(fastifySwaggerUi, swaggerUiOptions);
 
+fastify.register(require("fastify-file-upload"));
+
+fastify.register(async(fastify, options, done) => {
+  fastify.register(authRoutes);
+  fastify.register(categoryRoutes);
+  fastify.register(interestsRoutes);
+  fastify.register(toursRoutes);
+  fastify.register(imageRoutes);
+
+  done();
+});
 
 const start = async () => {
   try {
-    await db.sequelize.sync()
+    await db.sequelize.sync();
     await fastify.listen({ port, host: "0.0.0.0" });
   } catch (err) {
     console.log(err);
@@ -55,9 +67,12 @@ const start = async () => {
 ["SIGINT", "SIGTERM"].forEach((signal) => {
   process.on(signal, async () => {
     await fastify.close();
-
     process.exit(0);
   });
 });
 
-start();
+if(process.env.NODE_ENV !=="test"){
+  start();
+}
+
+module.exports = fastify

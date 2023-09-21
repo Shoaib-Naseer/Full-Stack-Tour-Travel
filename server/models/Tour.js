@@ -25,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Tour.associate = function (models) {
+
+    Tour.hasMany(models.Image, {
+      foreignKey: 'tour_id',
+      onDelete: 'CASCADE',
+    });
+
     Tour.belongsToMany(models.Category, {
       through: "TourCategories",
       foreignKey: "tour_id",

@@ -30,13 +30,6 @@ const loginUser = {
   schema: {
     body: LoginUser,
     response: {
-      200: {
-        type: "object",
-        properties: {
-          accessToken: { type: 'string' },
-          refreshToken: { type: 'string' },
-        },
-      },
       400: helper.errorMessage,
       404: helper.errorMessage,
     },
@@ -48,12 +41,6 @@ const registerUser = {
   schema: {
     body: RegisterUser,
     response: {
-      200: {
-        type: "object",
-        properties: {
-          accessToken: { type: 'string' },
-        },
-      },
       400: helper.errorMessage,
     },
   },

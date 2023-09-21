@@ -25,15 +25,19 @@ async function updateInterest(req, reply) {
   const { name, description = "" } = req.body;
 
   try {
+    const interest = await interestsService.getInterest(id);
+    if (!interest){
+      return reply.status(404).send({ error: "Interest not Found" });
+    }
     const isUpdated = await interestsService.updateInterest(id, {
       name,
       description,
     });
-
     if (isUpdated) {
-      reply.send({ message: "Interest updated successfully" });
+      const updatedInterest = await interestsService.getInterest(id);
+      reply.send(updatedInterest);
     } else {
-      reply.status(404).send({ error: "Interest not found" });
+      reply.status(404).send({ error: "Failed to update interest" });
     }
   } catch (error) {
     reply.status(400).send({ error: "Failed to update interest" });

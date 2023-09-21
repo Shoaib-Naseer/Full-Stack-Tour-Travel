@@ -62,7 +62,6 @@ const getInterest = {
       },
     },
     response: {
-      200: Interest,
       404:helper.errorMessage,
       400: helper.errorMessage,
     },

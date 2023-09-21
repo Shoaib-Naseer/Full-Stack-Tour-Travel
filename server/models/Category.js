@@ -12,5 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+  Category.associate = function(models){
+    Category.belongsToMany(models.Tour, {
+      through: "TourCategories",
+      foreignKey: "category_id",
+      otherKey: "tour_id",
+    });
+  }
+
   return Category;
 };
