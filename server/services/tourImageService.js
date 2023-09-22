@@ -1,7 +1,5 @@
 const fs = require("fs");
 const Path = require("path");
-const { unlink } = "node:fs/promises";
-
 const { Image } = require("../models");
 
 async function getAllImagesForTour(tourId) {

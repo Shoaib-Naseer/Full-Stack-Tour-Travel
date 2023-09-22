@@ -22,12 +22,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    limit:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   });
 
   Tour.associate = function (models) {
 
     Tour.hasMany(models.Image, {
       foreignKey: 'tour_id',
+      onDelete: 'CASCADE',
+    });
+
+    Tour.hasMany(models.PickupLocation, {
+      foreignKey: 'pickup_location_id',
       onDelete: 'CASCADE',
     });
 

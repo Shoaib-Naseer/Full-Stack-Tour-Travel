@@ -7,17 +7,24 @@ const tourBodySchema = {
   type: "object",
   properties: {
     tour_id: { type: "integer" },
+    limit: { type: "integer" },
     name: { type: "string" },
     description: { type: "string" },
     location: { type: "string" },
     base_price: { type: "string" },
   },
 };
-
+const tourParamsSchema = {
+  type: "object",
+  properties: {
+    id: { type: "integer" },
+  },
+};
 const tourResponseSchema = {
   type: "object",
   properties: {
     tour_id: { type: "integer" },
+    limit: { type: "integer" },
     name: { type: "string" },
     description: { type: "string" },
     location: { type: "string" },
@@ -49,7 +56,7 @@ const createTour = {
   schema: {
     body: { ...tourBodySchema, required: ["name"] },
     response: {
-      201:tourResponseSchema,
+      201: tourResponseSchema,
       400: helper.errorMessage,
     },
   },
@@ -58,15 +65,10 @@ const createTour = {
 
 const updateTour = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    params: tourParamsSchema,
     body: tourBodySchema,
     response: {
-      200:tourResponseSchema,
+      200: tourResponseSchema,
       404: helper.errorMessage,
       400: helper.errorMessage,
     },
@@ -76,14 +78,9 @@ const updateTour = {
 
 const getTour = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    params: tourParamsSchema,
     response: {
-      200:tourResponseSchema,
+      200: tourResponseSchema,
       404: helper.errorMessage,
       400: helper.errorMessage,
     },
@@ -93,14 +90,9 @@ const getTour = {
 
 const deleteTour = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    params: tourParamsSchema,
     response: {
-      200:tourResponseSchema,
+      200: tourResponseSchema,
       400: helper.errorMessage,
       404: helper.errorMessage,
     },

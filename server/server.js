@@ -11,6 +11,7 @@ const imageRoutes = require("./routes/imageRoute");
 const fastifySwagger = require("@fastify/swagger");
 const fastifySwaggerUi = require("@fastify/swagger-ui");
 const authRoutes = require("./routes/authRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 fastify = require("fastify")();
 
@@ -49,6 +50,7 @@ fastify.register(async(fastify, options, done) => {
   fastify.register(interestsRoutes);
   fastify.register(toursRoutes);
   fastify.register(imageRoutes);
+  fastify.register(bookingRoutes);
 
   done();
 });

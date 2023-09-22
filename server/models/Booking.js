@@ -9,11 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-    payment_id: {
+    payment_id:{
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -25,31 +21,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    pickup_location_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   });
-
-  Booking.associate = function (models) {
-    Booking.belongsTo(models.Payment, {
-      foreignKey: "payment_id",
-      onDelete: "CASCADE",
-    });
-
     Booking.belongsTo(models.User, {
       foreignKey: "user_id",
+      onDelete: "CASCADE",
+    });
+    Booking.belongsTo(models.Payment, {
+      foreignKey: "payment_id",
       onDelete: "CASCADE",
     });
     Booking.belongsTo(models.Tour, {
       foreignKey: "tour_id",
       onDelete: "CASCADE",
     });
-    Booking.belongsTo(models.PickupLocation, {
-      foreignKey: "pickup_location_id",
-      onDelete: "CASCADE",
-    });
-  };
 
+  };
   return Booking;
 };
