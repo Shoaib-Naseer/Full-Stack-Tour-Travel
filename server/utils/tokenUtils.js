@@ -15,7 +15,7 @@ function generateRefreshToken(user) {
   });
 }
 
-function logoutAccessToken(user) {
+function generateLogoutAccessToken(user) {
     const { user_id: userId, email } = user;
     return jwt.sign({ userId, email }, config.jwt.refreshTokenSecret, {
       expiresIn: config.jwt.logoutExpirationToken,
@@ -25,5 +25,5 @@ function logoutAccessToken(user) {
 module.exports = {
   generateAccessToken,
   generateRefreshToken,
-  logoutAccessToken
+  generateLogoutAccessToken
 };

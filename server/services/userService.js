@@ -1,4 +1,6 @@
 const { User } = require("../models");
+const fs = require("fs");
+const path = require("path");
 
 async function getAllUsers() {
   try {
@@ -42,9 +44,43 @@ async function deleteUserById(userId) {
   }
 }
 
+async function uploadProfilePicture(file, userId) {
+  try {
+    const dirPath = path.join(__dirname, "..", "uploads/profiles");
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const filePath = path.join(dirPath, `${uniqueSuffix}-${file.name}`);
+
+    await file.mv(filePath);
+    await User.update(
+      { profile_image: filePath },
+      { where: { user_id: userId } },
+    );
+
+    return filePath;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+async function deleteUserProfilePicture(imagePath) {
+  try {
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
   deleteUserById,
   getUserByEmail,
+  uploadProfilePicture,
+  deleteUserProfilePicture,
 };

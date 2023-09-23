@@ -26,7 +26,7 @@ async function getSingleImageById(imageId) {
 
 async function uploadImage(files, tour_id) {
   try {
-    const dirPath = Path.join(__dirname, "..", "uploads");
+    const dirPath = Path.join(__dirname, "..", `uploads/tours`);
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }

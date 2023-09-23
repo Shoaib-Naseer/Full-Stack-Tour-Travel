@@ -1,13 +1,13 @@
-function sendSuccessResponse(reply, data,statusCode = 200) {
-    return reply.status(statusCode).send({ message: "success", data });
+function sendSuccessResponse(reply, body,statusCode = 200) {
+    return reply.status(statusCode).send({ message: "success", data:body });
   }
   
-  function sendFailureResponse(reply, error) {
-    return reply.status(400).send({ message: "failure", error });
+  function sendFailureResponse(reply, message,statusCode = 400) {
+    return reply.status(statusCode).send({ message: "failure", error:message });
   }
   
-  function sendNotFoundResponse(reply, message) {
-    return reply.status(404).send({ message: "failure", error: message });
+  function sendNotFoundResponse(reply, message,statusCode = 40) {
+    return reply.status(statusCode).send({ message: "failure", error: message });
   }
   
   module.exports = {

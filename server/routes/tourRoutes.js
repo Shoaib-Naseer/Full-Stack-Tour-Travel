@@ -102,7 +102,7 @@ const deleteTour = {
   handler: tourController.deleteTour,
 };
 
-function categoryRoutes(fastify, options, done) {
+function tourRoutes(fastify, options, done) {
   fastify.get(`${config.app.apiPath}tours`, getTours);
   fastify.post(`${config.app.apiPath}tours`, createTour);
   fastify.get(`${config.app.apiPath}tours/:id`, getTour);
@@ -112,4 +112,4 @@ function categoryRoutes(fastify, options, done) {
   done();
 }
 
-module.exports = categoryRoutes;
+module.exports = tourRoutes;

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Image.associate = function (models) {
     Image.belongsTo(models.Tour, {
       foreignKey: "tour_id",
-      onDelete: "CASCADE", // Adjust the deletion behavior as needed
+      onDelete: "CASCADE", 
     });
   };
 

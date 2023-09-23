@@ -36,7 +36,7 @@ async function loginUser(userPassword,password) {
 }
 
 async function logutUser(user) {
-  const accessToken = tokenUtils.logoutAccessToken(user);
+  const accessToken = tokenUtils.generateLogoutAccessToken(user);
   return accessToken;
 }
 
