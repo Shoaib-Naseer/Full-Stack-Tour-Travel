@@ -1,29 +1,35 @@
 const authService = require("../services/authService");
 const userService = require("../services/userService");
 
-const register = async (request, reply) => {
+const register = async (req, reply) => {
   try {
-    const userData = request.body;
+    const userData = req.body;
     const { email } = userData;
     const user = await userService.getUserByEmail(email);
-    if (user) return reply.code(400).send({ message: "User Already Exists" });
+    if (user)
+      return reply
+        .code(400)
+        .send({ message: "failure", error: "User Already Exists" });
     const newUser = await authService.registerUser(userData);
     if (!newUser)
       return reply
         .code(400)
         .send({ message: "failure", error: "Error While Creating new User" });
     const accessToken = tokenUtils.generateAccessToken(user);
-    reply.code(201).send({ message: "success", accessToken });
+    reply.code(201).send({ message: "success", data: { accessToken } });
   } catch (error) {
-    reply.code(400).send({ error: error });
+    reply.code(400).send({ message: "failure", error: error.message });
   }
 };
 
-const login = async (request, reply) => {
+const login = async (req, reply) => {
   try {
-    const { email, password } = request.body;
+    const { email, password } = req.body;
     const user = await userService.getUserByEmail(email);
-    if (!user) return reply.code(400).send({ message: "User Doesnt Exists" });
+    if (!user)
+      return reply
+        .code(400)
+        .send({ message: "failure", error: "User Doesnt Exists" });
     const validPassword = await authService.loginUser(email, password);
     if (!validPassword)
       return reply
@@ -33,21 +39,26 @@ const login = async (request, reply) => {
     const refreshToken = tokenUtils.generateRefreshToken(user);
     reply
       .code(200)
-      .send({ messgae: "success", tokens: { accessToken, refreshToken } });
+      .send({ messgae: "success", data: { accessToken, refreshToken } });
   } catch (error) {
-    reply.code(401).send({ error: error.message });
+    reply.code(400).send({ message: "failure", error: error.message });
   }
 };
 
 // Logout the authenticated user
-const logout = async (request, reply) => {
+const logout = async (req, reply) => {
   try {
-    const { email } = request.body;
+    const { email } = req.body;
     const user = await userService.getUserByEmail(email);
-    if (!user) return reply.code(400).send({ message: "User Doesnt Exists" });
+    if (!user)
+      return reply
+        .code(400)
+        .send({ message: "failure", error: "User Doesnt Exists" });
     const accessToken = await authService.logutUser(user);
-    reply.code(200).send({ accessToken });
-  } catch (error) {}
+    reply.code(200).send({ message: "success", data: { accessToken } });
+  } catch (error) {
+    reply.code(400).send({ message: "failure", error: error.message });
+  }
 };
 
 module.exports = { register, login, logout };

@@ -10,36 +10,31 @@ async function getAllTours() {
 }
 
 async function createTour(tourData) {
-  try {
-    const createdTour = await Tour.create(tourData);
-    return createdTour;
-  } catch (error) {
-    throw new Error(`Failed to create tour: ${error.message}`);
-  }
+  const createdTour = await Tour.create(tourData);
+  return createdTour;
 }
 
 async function getTourById(id) {
   return await Tour.findByPk(id, {
     include: {
       model: Image,
-      attributes: ["url"],
+      attributes: ["url", "image_id"],
     },
   });
 }
 
-async function updateTour(id, tourData) {
-  const tour = await getTourById(id);
-  if (!tour) {
-    return null;
-  }
-  return await tour.update(tourData);
+async function updateTour(id, data) {
+  const [, updatedRows] = await Tour.update(data, {
+    where: { tour_id: id },
+    returning: true,
+  });
+
+  const updatedTour = updatedRows[0].get({ plain: true });
+  return updatedTour;
 }
 
 async function deleteTour(id) {
   const tour = await getTourById(id);
-  if (!tour) {
-    return null;
-  }
   await tour.destroy();
   return tour;
 }

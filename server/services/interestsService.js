@@ -9,10 +9,13 @@ async function createInterest(name, description) {
 }
 
 async function updateInterest(id, data) {
-  const [updatedRows] = await Interest.update(data, {
+  const [, updatedRows] = await Interest.update(data, {
     where: { interest_id: id },
+    returning: true,
   });
-  return updatedRows > 0;
+
+  const updatedInterest = updatedRows[0].get({ plain: true });
+  return updatedInterest;
 }
 
 async function getInterest(id) {
@@ -23,7 +26,7 @@ async function getInterest(id) {
 async function deleteInterest(id) {
   const interest = await Interest.findByPk(id);
   await interest.destroy();
-  return { message: "Interest deleted successfully" };
+  return interest;
 }
 
 module.exports = {

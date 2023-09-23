@@ -3,76 +3,66 @@ const interestsService = require("../services/interestsService");
 async function getAllInterests(req, reply) {
   try {
     const interests = await interestsService.getAllInterests();
-    reply.send(interests);
+    reply.status(200).send({ message: "success", data: { interests } });
   } catch (error) {
-    reply.status(400).send({ error: "Failed to fetch interests" });
+    reply.code(400).send({ message: "failure", error: error.message });
   }
 }
 
 async function createInterest(req, reply) {
   const { name, description = "" } = req.body;
-
   try {
     const interest = await interestsService.createInterest(name, description);
-    reply.status(201).send(interest);
+    reply.status(201).send({ message: "success", data: { interest } });
   } catch (error) {
-    reply.status(400).send({ error: "Failed to create interest" });
+    reply.code(400).send({ message: "failure", error: error.message });
   }
 }
 
 async function updateInterest(req, reply) {
   const { id } = req.params;
   const { name, description = "" } = req.body;
-
   try {
-    const interest = await interestsService.getInterest(id);
-    if (!interest){
-      return reply.status(404).send({ error: "Interest not Found" });
+    const interestExists = await interestsService.getInterest(id);
+    if (!interestExists) {
+      return reply.status(404).send({  message: "failure",error: "Interest not Found" });
     }
-    const isUpdated = await interestsService.updateInterest(id, {
+    const interest = await interestsService.updateInterest(id, {
       name,
       description,
     });
-    if (isUpdated) {
-      const updatedInterest = await interestsService.getInterest(id);
-      reply.send(updatedInterest);
-    } else {
-      reply.status(404).send({ error: "Failed to update interest" });
-    }
+    reply.status(201).send({ message: "success", data: { interest } });
   } catch (error) {
-    reply.status(400).send({ error: "Failed to update interest" });
+    reply.code(400).send({ message: "failure", error: error.message });
   }
 }
 
 async function getInterest(req, reply) {
   const { id } = req.params;
-
   try {
     const interest = await interestsService.getInterest(id);
-
     if (interest) {
-      reply.send(interest);
+      reply.status(200).send({ message: "success", data: { interest } });
     } else {
-      reply.status(404).send({ error: "Interest not found" });
+      reply.status(404).send({  message: "failure",error: "Interest not found" });
     }
   } catch (error) {
-    reply.status(400).send({ error: "Failed to Find interest" });
+    reply.code(400).send({ message: "failure", error: error.message });
   }
 }
 
 async function deleteInterest(req, reply) {
   const { id } = req.params;
   try {
-    const interest = await interestsService.getInterest(id);
-    if (interest) {
-      const message = await interestsService.deleteInterest(id);
-      reply.send(message);
+    const interestExists = await interestsService.getInterest(id);
+    if (interestExists) {
+      const interest = await interestsService.deleteInterest(id);
+      reply.status(200).send({ message: "success", data: { interest } });
     } else {
-      reply.status(404).send({ error: "Interest not found" });
+      return reply.status(404).send({ message: "failure", error: "Interest not found" });
     }
   } catch (error) {
-    reply.status(400).send({ error: "Failed to Find interest" });
-  }
+    reply.code(400).send({ message: "failure", error: error.message });  }
 }
 
 module.exports = {

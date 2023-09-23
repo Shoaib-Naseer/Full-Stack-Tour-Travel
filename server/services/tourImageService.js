@@ -3,14 +3,10 @@ const Path = require("path");
 const { Image } = require("../models");
 
 async function getAllImagesForTour(tourId) {
-  try {
-    const images = await Image.findAll({
-      where: { tour_id: tourId },
-    });
-    return images;
-  } catch (error) {
-    throw new Error(`Failed to retrieve images: ${error.message}`);
-  }
+  const images = await Image.findAll({
+    where: { tour_id: tourId },
+  });
+  return images;
 }
 
 async function getAllImages() {
@@ -20,6 +16,12 @@ async function getAllImages() {
   } catch (error) {
     throw new Error(`Failed to retrieve images: ${error.message}`);
   }
+}
+
+async function getSingleImageById(imageId) {
+    const image = await Image.findOne({ where: { image_id: imageId } });
+    return image;
+  
 }
 
 async function uploadImage(files, tour_id) {
@@ -57,9 +59,9 @@ async function deleteSingleImage(imageId) {
     const imageUrl = image.url;
     await image.destroy();
 
-    fs.unlink(imageUrl, (err => {
+    fs.unlink(imageUrl, (err) => {
       if (err) console.log(err);
-    }));
+    });
 
     return image;
   } catch (error) {
@@ -77,13 +79,13 @@ async function deleteAllTourImages(tourId) {
       const imageUrl = image.url;
       await image.destroy();
       // Delete the image file from the server
-      fs.unlink(imageUrl, (err => {
+      fs.unlink(imageUrl, (err) => {
         if (err) console.log(err);
-      }));
+      });
 
       deletedImageUrls.push(imageUrl);
     }
-    return  imagesToDelete;
+    return imagesToDelete;
   } catch (error) {
     console.error(error);
     throw new Error(`Failed to delete all images: ${error.message}`);
@@ -95,5 +97,6 @@ module.exports = {
   deleteAllTourImages,
   deleteSingleImage,
   getAllImagesForTour,
-  getAllImages
+  getAllImages,
+  getSingleImageById
 };

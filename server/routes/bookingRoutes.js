@@ -1,3 +1,4 @@
+const config = require("../config");
 const bookingController = require("../controllers/bookingController");
 
 // Request schema for creating a booking
@@ -114,8 +115,8 @@ const getBookingsForTour = {
 function bookingRoutes(fastify, options, done) {
   fastify.get(`${config.app.apiPath}bookings`, getAllBookings);
   fastify.post(`${config.app.apiPath}/bookings/:tourId`, createBooking);
-  fastify.get(`${config.app.apiPath}/bookings/:tourId`, getBookingsForTour);
-  fastify.get(`${config.app.apiPath}/bookings/:userId`, getBookingsForUser);  
+  fastify.get(`${config.app.apiPath}/bookings/tours/:tourId`, getBookingsForTour);
+  fastify.get(`${config.app.apiPath}/bookings/users/:userId`, getBookingsForUser);  
   fastify.get(`${config.app.apiPath}bookings/:tourId/:userId`, getBookingByUserAndTour);
 
   done();

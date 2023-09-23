@@ -7,10 +7,9 @@ async function uploadImages(req, reply) {
     const files = req.raw.files;
     const { tourId } = req.params;
     const images = await tourImageService.uploadImage(files, tourId);
-    reply.status(201).send({ message: "success", images });
+    reply.status(201).send({ message: "success", data: { images } });
   } catch (error) {
-    console.error("Error uploading files:", error);
-    reply.status(400).send({ error: "Error uploading files:" });
+    reply.status(400).send({ message: "failure", error: error.message });
   }
 }
 
@@ -18,14 +17,15 @@ async function uploadImages(req, reply) {
 async function getAllImagesForTour(req, reply) {
   try {
     const { tourId } = req.params;
+    const tour = await tourService.getTourById({ tourId });
+    if (!tour)
+      return reply
+        .status(404)
+        .send({ message: "failure", error: "Tour not found" });
     const images = await tourImageService.getAllImagesForTour(tourId);
-    if (!images) {
-      reply.status(404).send({ error: "Image not found" });
-    } else {
-      reply.send({ message: "success", images });
-    }
+    reply.send({ message: "success", data: { images } });
   } catch (error) {
-    reply.status(400).send({ error:error.message });
+    reply.status(400).send({ message: "failure", error: error.message });
   }
 }
 
@@ -33,13 +33,9 @@ async function getAllImagesForTour(req, reply) {
 async function getAllImages(req, reply) {
   try {
     const images = await tourImageService.getAllImages();
-  if (!images) {
-    reply.status(404).send({ error: "Images not found" });
-  } else {
-    reply.send({message: "success",images});
-  }
+    reply.send({ message: "success", data: { images } });
   } catch (error) {
-    reply.status(400).send({ error:error.message });
+    reply.status(400).send({ message: "failure", error: error.message });
   }
 }
 
@@ -47,18 +43,20 @@ async function getAllImages(req, reply) {
 async function deleteSingleTourImage(req, reply) {
   try {
     const { tourId, imageId } = req.params;
-    const tour = await tourService.getTourById(tourId);
-    if (!tour) {
-      reply.status(404).send({ error: "Tour not found" });
-    }
-    const images = await tourImageService.deleteSingleImage(imageId);
-    if (!images) {
-      reply.status(404).send({ error: "Image not found" });
-    } else {
-      reply.send({ message: "success" , images});
-    }
+    const tourExists = await tourService.getTourById(tourId);
+    if (!tourExists)
+      return reply
+        .status(404)
+        .send({ message: "failure", error: "Tour not found" });
+    const imageExists = await tourImageService.getSingleImageById(imageId);
+    if (!imageExists)
+      return reply
+        .status(404)
+        .send({ message: "failure", error: "Image not found" });
+    const image = await tourImageService.deleteSingleImage(imageId);
+    reply.send({ message: "success", data: { image } });
   } catch (error) {
-    reply.status(400).send({ error: error.message });
+    reply.status(400).send({ message: "failure", error: error.message });
   }
 }
 
@@ -66,17 +64,15 @@ async function deleteAllTourImages(req, reply) {
   try {
     const { tourId } = req.params;
     const tour = await tourService.getTourById(tourId);
-    if (!tour) {
-      reply.status(404).send({ error: "Tour not found" });
-    }
+    if (!tour)
+      return reply
+        .status(404)
+        .send({ message: "failure", error: "Tour not found" });
+
     const images = await tourImageService.deleteAllTourImages(tourId);
-    if (!images) {
-      reply.status(404).send({ error: "Image not found" });
-    } else {
-      reply.send({ message: "success", images});
-    }
+    reply.send({ message: "success", data: { images } });
   } catch (error) {
-    reply.status(400).send({ error: error.message });
+    reply.status(400).send({ message: "failure", error: error.message });
   }
 }
 
@@ -85,5 +81,5 @@ module.exports = {
   deleteSingleTourImage,
   deleteAllTourImages,
   getAllImagesForTour,
-  getAllImages
+  getAllImages,
 };

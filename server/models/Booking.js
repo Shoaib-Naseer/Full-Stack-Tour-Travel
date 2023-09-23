@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    payment_id:{
+    payment_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  Booking.associate = function (models) {
     Booking.belongsTo(models.User, {
       foreignKey: "user_id",
       onDelete: "CASCADE",
@@ -34,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "tour_id",
       onDelete: "CASCADE",
     });
-
   };
   return Booking;
 };
