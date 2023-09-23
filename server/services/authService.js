@@ -27,8 +27,8 @@ const registerUser = async (userData) => {
   return user;
 };
 
-async function loginUser(password) {
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+async function loginUser(userPassword,password) {
+  const isPasswordValid = await bcrypt.compare(password, userPassword);
   if (!isPasswordValid) {
     return 0;
   }

@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Tour.hasMany(models.PickupLocation, {
-      foreignKey: 'pickup_location_id',
+      foreignKey: 'tour_id',
       onDelete: 'CASCADE',
     });
 

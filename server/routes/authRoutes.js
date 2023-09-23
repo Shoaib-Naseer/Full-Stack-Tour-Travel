@@ -3,7 +3,7 @@ const config = require("../config");
 const helper = require("./helper");
 const authController = require("../controllers/authContoller");
 
-const LoginUser = {
+const loginUserBodySchema = {
   type: "object",
   required: ["email", "password"],
   properties: {
@@ -12,7 +12,7 @@ const LoginUser = {
   },
 };
 
-const RegisterUser = {
+const registerUserBodySchema = {
   type: "object",
   required: ["username", "gender", "email", "password"],
   properties: {
@@ -26,9 +26,17 @@ const RegisterUser = {
   },
 };
 
+const logoutUserBodySchema = {
+  type: "object",
+  required: ["email"],
+  properties: {
+    email: { type: "string", format: "email" },
+  },
+};
+
 const loginUser = {
   schema: {
-    body: LoginUser,
+    body: loginUserBodySchema,
     response: {
       400: helper.errorMessage,
       404: helper.errorMessage,
@@ -39,7 +47,7 @@ const loginUser = {
 
 const registerUser = {
   schema: {
-    body: RegisterUser,
+    body: registerUserBodySchema,
     response: {
       400: helper.errorMessage,
     },
@@ -47,9 +55,21 @@ const registerUser = {
   handler: authController.register,
 };
 
+const logoutUser = {
+  schema: {
+    body: logoutUserBodySchema,
+    response: {
+      400: helper.errorMessage,
+      404: helper.errorMessage,
+    },
+  },
+  handler: authController.logout,
+};
+
 function authRoutes(fastify, options, done) {
   fastify.post(`${config.app.apiPath}auth/login`, loginUser);
   fastify.post(`${config.app.apiPath}auth/register`, registerUser);
+  fastify.post(`${config.app.apiPath}auth/logout`, logoutUser);
   done();
 }
 

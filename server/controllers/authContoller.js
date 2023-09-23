@@ -1,5 +1,6 @@
 const authService = require("../services/authService");
 const userService = require("../services/userService");
+const tokenUtils = require("../utils/tokenUtils")
 
 const register = async (req, reply) => {
   try {
@@ -15,7 +16,7 @@ const register = async (req, reply) => {
       return reply
         .code(400)
         .send({ message: "failure", error: "Error While Creating new User" });
-    const accessToken = tokenUtils.generateAccessToken(user);
+    const accessToken = tokenUtils.generateAccessToken(newUser);
     reply.code(201).send({ message: "success", data: { accessToken } });
   } catch (error) {
     reply.code(400).send({ message: "failure", error: error.message });
@@ -30,11 +31,12 @@ const login = async (req, reply) => {
       return reply
         .code(400)
         .send({ message: "failure", error: "User Doesnt Exists" });
-    const validPassword = await authService.loginUser(email, password);
+    const validPassword = await authService.loginUser(user.password, password);
     if (!validPassword)
       return reply
         .code(400)
         .send({ message: "failure", error: "Invalid Credentials" });
+       
     const accessToken = tokenUtils.generateAccessToken(user);
     const refreshToken = tokenUtils.generateRefreshToken(user);
     reply
