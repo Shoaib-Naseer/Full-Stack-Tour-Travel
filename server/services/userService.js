@@ -21,6 +21,11 @@ async function getUserById(userId) {
   }
 }
 
+async function getUserByEmail(email) {
+  const user = await User.findOne({ where: { email } });
+  return user;
+}
+
 async function deleteUserById(userId) {
   try {
     const deletedRows = await User.destroy({
@@ -37,9 +42,9 @@ async function deleteUserById(userId) {
   }
 }
 
-// Export the functions
 module.exports = {
   getAllUsers,
   getUserById,
   deleteUserById,
+  getUserByEmail,
 };

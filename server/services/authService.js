@@ -1,6 +1,6 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const tokenUtils = require("../utils/tokenUtils");
 const config = require("../config");
 
 const registerUser = async (userData) => {
@@ -13,10 +13,6 @@ const registerUser = async (userData) => {
     location = "",
     profile_image = "",
   } = userData;
-  const existingUser = await User.findOne({ where: { email } });
-  if (existingUser) {
-    throw new Error("User already exists");
-  }
   const hashedPassword = await bcrypt.hash(password, config.jwt.saltRounds);
   const user = await User.create({
     username,
@@ -27,40 +23,25 @@ const registerUser = async (userData) => {
     location,
     profile_image,
   });
-  const accessToken = jwt.sign(
-    { userId: user.user_id, email: user.email },
-    config.jwt.accessTokenSecret,
-    { expiresIn: config.jwt.expirationShortInSeconds },
-  );
-  return accessToken;
+
+  return user;
 };
 
-async function loginUser(email, password) {
-  const user = await User.findOne({ where: { email } });
-  if (!user) {
-    throw new Error("User not found.");
-  }
+async function loginUser(password) {
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    throw new Error("Invalid Credentials.");
+    return 0;
   }
-  const accessToken = jwt.sign(
-    { userId: user.user_id, email: user.email },
-    config.jwt.accessTokenSecret,
-    { expiresIn: config.jwt.expirationShortInSeconds },
-  );
-  const refreshToken = jwt.sign(
-    { userId: user.user_id, email: user.email },
-    config.jwt.refreshTokenSecret,
-    { expiresIn: config.jwt.refreshExpirationInSeconds },
-  );
-  return({
-    accessToken,
-    refreshToken,
-  });
+  return 1;
+}
+
+async function logutUser(user) {
+  const accessToken = tokenUtils.logoutAccessToken(user);
+  return accessToken;
 }
 
 module.exports = {
   loginUser,
+  logutUser,
   registerUser,
 };

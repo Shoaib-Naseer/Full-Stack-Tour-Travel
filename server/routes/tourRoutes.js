@@ -14,12 +14,14 @@ const tourBodySchema = {
     base_price: { type: "string" },
   },
 };
+
 const tourParamsSchema = {
   type: "object",
   properties: {
     id: { type: "integer" },
   },
 };
+
 const tourResponseSchema = {
   type: "object",
   properties: {
