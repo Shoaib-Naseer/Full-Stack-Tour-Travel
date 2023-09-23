@@ -28,7 +28,6 @@ async function createBooking(bookingData) {
   }
 }
 
-// Function to get all bookings for a specific tour
 async function getBookingsForTour(tourId) {
   try {
     const bookings = await Booking.findAll({
@@ -41,7 +40,6 @@ async function getBookingsForTour(tourId) {
   }
 }
 
-// Function to get all bookings for a specific user
 async function getBookingsForUser(userId) {
   try {
     const bookings = await Booking.findAll({
@@ -54,7 +52,6 @@ async function getBookingsForUser(userId) {
   }
 }
 
-// Function to get all bookings
 async function getAllBookings() {
   try {
     const bookings = await Booking.findAll({ include: [User, Tour, Payment] });
@@ -64,7 +61,6 @@ async function getAllBookings() {
   }
 }
 
-// Function to get a specific booking based on user and tour ID
 async function getBookingByUserAndTour(userId, tourId) {
   try {
     const booking = await Booking.findOne({

@@ -40,5 +40,6 @@ module.exports = {
       process.env.JWT_REFRESH_TOKEN_EXPIRATION_IN_SECONDS || 7200000,
     saltRounds: process.env.SALT_ROUNDS || 10,
     tokenExpiryExtensionSeconds: 60 * 60 * 24 * 365,
+    logoutExpirationToken:rocess.env.JWT_LOGOUT_ACCESS_TOKEN_EXPIRATION_IN_SECONDS || 1
   },
 };

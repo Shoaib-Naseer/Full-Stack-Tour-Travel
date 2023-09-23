@@ -4,7 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 async function makeStripePayment(paymentData) {
     try {
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: paymentData.amount * 100, // Amount in cents
+        amount: paymentData.amount * 100, 
         currency: 'pkr', 
         description: 'Payment Description',
         payment_method_types: ['card'],
