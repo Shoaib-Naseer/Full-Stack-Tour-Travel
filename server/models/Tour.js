@@ -1,14 +1,14 @@
 // models/Tour.js
 module.exports = (sequelize, DataTypes) => {
   const Tour = sequelize.define("Tour", {
+    basic_tour_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     tour_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     description: {
       type: DataTypes.TEXT,
@@ -25,7 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     limit:{
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
+    booking_start_date: {
+      type: DataTypes.DATE,
+      defaultValue: () => new Date(),
+    },
+    booking_end_date: {
+      type: DataTypes.DATE,
+    },
   });
 
   Tour.associate = function (models) {
@@ -35,16 +42,24 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
 
-    Tour.hasMany(models.PickupLocation, {
+    Tour.belongsTo(models.BasicTour, {
+      foreignKey: "basic_tour_id",
+      onDelete: "CASCADE",  
+    });
+
+    Tour.belongsToMany(models.PickupLocation, {
+      through: "TourPickupLocations",
       foreignKey: 'tour_id',
-      onDelete: 'CASCADE',
+      otherKey: "pickup_location_id",
     });
 
     Tour.belongsToMany(models.Category, {
       through: "TourCategories",
-      foreignKey: "tour_id",
+      foreignKey: 'tour_id',
       otherKey: "category_id",
     });
+
+    
   };
 
   return Tour;

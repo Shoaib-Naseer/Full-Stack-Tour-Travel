@@ -24,7 +24,7 @@ async function getSingleImageById(imageId) {
   
 }
 
-async function uploadImage(files, tour_id) {
+async function uploadImage(files, tourId) {
   try {
     const dirPath = Path.join(__dirname, "..", `uploads/tours`);
     if (!fs.existsSync(dirPath)) {
@@ -39,7 +39,7 @@ async function uploadImage(files, tour_id) {
 
       await file.mv(filePath);
       const img = await Image.create({
-        tour_id: tour_id,
+        tour_id: tourId,
         url: filePath,
       });
       savedFiles.push(img);

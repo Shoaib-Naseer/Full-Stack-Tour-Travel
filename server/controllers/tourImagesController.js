@@ -6,6 +6,10 @@ async function uploadImages(req, reply) {
   try {
     const files = req.raw.files;
     const { tourId } = req.params;
+    const tour = await tourService.getTourById(tourId)
+    if(!tour){
+      reply.status(404).send({ message: "failure",error:"Tour not Found" });
+    }
     const images = await tourImageService.uploadImage(files, tourId);
     reply.status(201).send({ message: "success", data: { images } });
   } catch (error) {
@@ -17,7 +21,7 @@ async function uploadImages(req, reply) {
 async function getAllImagesForTour(req, reply) {
   try {
     const { tourId } = req.params;
-    const tour = await tourService.getTourById({ tourId });
+    const tour = await tourService.getTourById( tourId );
     if (!tour)
       return reply
         .status(404)

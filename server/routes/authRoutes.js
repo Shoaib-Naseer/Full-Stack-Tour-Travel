@@ -36,6 +36,7 @@ const logoutUserBodySchema = {
 
 const loginUser = {
   schema: {
+    tags: ["Auth"],
     body: loginUserBodySchema,
     response: {
       400: helper.errorMessage,
@@ -47,6 +48,7 @@ const loginUser = {
 
 const registerUser = {
   schema: {
+    tags: ["Auth"],
     body: registerUserBodySchema,
     response: {
       400: helper.errorMessage,
@@ -57,6 +59,7 @@ const registerUser = {
 
 const logoutUser = {
   schema: {
+    tags: ["Auth"],
     body: logoutUserBodySchema,
     response: {
       400: helper.errorMessage,

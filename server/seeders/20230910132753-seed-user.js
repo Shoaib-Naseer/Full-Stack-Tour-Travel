@@ -1,26 +1,31 @@
 "use strict";
+const config = require("../config");
 const usersData = require("../data/users");
+const bcrypt = require("bcrypt");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Set the starting primary key value for the "Roles" table
-    const startingPrimaryKeyValue = 1; // You can adjust this value as needed
+    const startingPrimaryKeyValue = 1;
 
     // Truncate the "Roles" table to reset primary key increments
     await queryInterface.sequelize.query(
       `TRUNCATE TABLE "Users" RESTART IDENTITY CASCADE`,
     );
 
-    // Insert data with the specified starting primary key value
-    await queryInterface.bulkInsert(
-      "Users",
-      usersData.map((user, index) => ({
+   // Hash passwords and insert data with the specified starting primary key value
+   const hashedUsersData = await Promise.all(
+    usersData.map(async (user, index) => {
+      const hashedPassword = await bcrypt.hash(user.password, config.jwt.saltRounds);
+      return {
         ...user,
         user_id: startingPrimaryKeyValue + index,
-      })),
-      {},
-    );
+        password: hashedPassword, // Replace the plain text password with the hashed password
+      };
+    })
+  );
+
+  await queryInterface.bulkInsert("Users", hashedUsersData, {});
   },
 
   async down(queryInterface, Sequelize) {

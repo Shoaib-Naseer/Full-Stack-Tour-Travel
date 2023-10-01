@@ -6,12 +6,12 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
-    "db": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "seed": "npx sequelize-cli db:seed:all",
     "lint": "prettier --write . && eslint --ignore-path .gitignore . --fix",
     "lint:fix": "prettier --write . eslint --ignore-path .gitignore . --fix",
     "format": "prettier --write .",
-    "test-db": "cross-env NODE_ENV=test npx sequelize-cli db:create && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "test-db": "cross-env NODE_ENV=test npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {

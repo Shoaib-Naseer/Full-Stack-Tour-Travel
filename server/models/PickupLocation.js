@@ -13,8 +13,15 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
     },
-    // Other attributes related to pickup locations...
   });
+
+  PickupLocation.associate = function (models) {
+    PickupLocation.belongsToMany(models.Tour, {
+      through: "TourPickupLocations",
+      foreignKey: "pickup_location_id",
+      otherKey: "tour_id",
+    });
+  };
 
   return PickupLocation;
 };

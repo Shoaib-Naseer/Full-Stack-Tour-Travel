@@ -85,6 +85,7 @@ const updateReviewParamsSchema = {
 
 const getAllReviewsForTour = {
   schema: {
+    tags: ["Reviews"],
     params: tourIdParamSchema,
     response: {
       200: { type: "array", items: reviewWithAssociationsSchema },
@@ -97,6 +98,7 @@ const getAllReviewsForTour = {
 
 const getAllReviewsForUser = {
   schema: {
+    tags: ["Reviews"],
     params: userIdParamSchema,
     response: {
       200: { type: "array", items: reviewWithAssociationsSchema },
@@ -109,6 +111,7 @@ const getAllReviewsForUser = {
 
 const getAllReviews = {
   schema: {
+    tags: ["Reviews"],
     response: {
       200: { type: "array", items: reviewWithAssociationsSchema },
       400: helper.errorMessage,
@@ -120,6 +123,7 @@ const getAllReviews = {
 
 const createReview = {
   schema: {
+    tags: ["Reviews"],
     body: createReviewSchema,
     params: tourIdParamSchema,
     response: {
@@ -131,6 +135,7 @@ const createReview = {
 
 const updateReview = {
   schema: {
+    tags: ["Reviews"],
     params: updateReviewParamsSchema,
     body: updateReviewSchema,
     response: {
@@ -143,6 +148,7 @@ const updateReview = {
 
 const getReviewById = {
   schema: {
+    tags: ["Reviews"],
     params: reviewIdParamSchema,
     response: {
       404: helper.errorMessage,
@@ -154,6 +160,7 @@ const getReviewById = {
 
 const deleteReview = {
   schema: {
+    tags: ["Reviews"],
     params: reviewIdParamSchema,
     response: {
       400: helper.errorMessage,

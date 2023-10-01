@@ -2,87 +2,53 @@
 const config = require("../config");
 const helper = require("./helper");
 const tourController = require("../controllers/tourController");
+const basicTourController = require("../controllers/basicTourController");
 
-const tourBodySchema = {
-  type: "object",
-  properties: {
-    tour_id: { type: "integer" },
-    limit: { type: "integer" },
-    name: { type: "string" },
-    description: { type: "string" },
-    location: { type: "string" },
-    base_price: { type: "string" },
-  },
-};
 
-const tourParamsSchema = {
-  type: "object",
-  properties: {
-    id: { type: "integer" },
-  },
-};
-
-const tourResponseSchema = {
-  type: "object",
-  properties: {
-    tour_id: { type: "integer" },
-    limit: { type: "integer" },
-    name: { type: "string" },
-    description: { type: "string" },
-    location: { type: "string" },
-    base_price: { type: "string" },
-    Images: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          url: { type: "string" },
-          image_id: { type: "integer" },
-        },
-      },
-    },
-  },
-};
-
-const getTours = {
+const getActiveTours = {
   schema: {
+    tags: ["Tours"],
     response: {
-      200: { type: "array", items: tourResponseSchema },
+      // 200: { type: "array", items: tourResponseSchema },
       400: helper.errorMessage,
+      404: helper.errorMessage,
     },
   },
-  handler: tourController.getAllTours,
+  handler: basicTourController.getAllActiveBasicTours,
 };
 
 const createTour = {
   schema: {
-    body: { ...tourBodySchema, required: ["name"] },
+    tags: ["Tours"],
+    // body: { ...tourBodySchema, required: ["name"] },
     response: {
-      201: tourResponseSchema,
+      // 201: tourResponseSchema,
       400: helper.errorMessage,
     },
   },
   handler: tourController.createTour,
 };
 
-const updateTour = {
+const updateActiveTour = {
   schema: {
-    params: tourParamsSchema,
-    body: tourBodySchema,
+    tags: ["Tours"],
+    // params: tourParamsSchema,
+    // body: tourBodySchema,
     response: {
-      200: tourResponseSchema,
+      // 200: tourResponseSchema,
       404: helper.errorMessage,
       400: helper.errorMessage,
     },
   },
-  handler: tourController.updateTour,
+  handler: tourController.updateActiveTour,
 };
 
 const getTour = {
   schema: {
-    params: tourParamsSchema,
+    tags: ["Tours"],
+    // params: tourParamsSchema,
     response: {
-      200: tourResponseSchema,
+      // 200: tourResponseSchema,
       404: helper.errorMessage,
       400: helper.errorMessage,
     },
@@ -90,24 +56,27 @@ const getTour = {
   handler: tourController.getTour,
 };
 
-const deleteTour = {
+const deleteActiveTour = {
   schema: {
-    params: tourParamsSchema,
+    tags: ["Tours"],
+    // params: tourParamsSchema,
     response: {
-      200: tourResponseSchema,
+      // 200: tourResponseSchema,
       400: helper.errorMessage,
       404: helper.errorMessage,
     },
   },
-  handler: tourController.deleteTour,
+  handler: tourController.deleteActiveTour,
 };
 
 function tourRoutes(fastify, options, done) {
-  fastify.get(`${config.app.apiPath}tours`, getTours);
+  fastify.get(`${config.app.apiPath}tours`, getActiveTours);
+  fastify.get(`${config.app.apiPath}tours/:tourId`, getTour);
+
+  // admin routes
   fastify.post(`${config.app.apiPath}tours`, createTour);
-  fastify.get(`${config.app.apiPath}tours/:id`, getTour);
-  fastify.put(`${config.app.apiPath}tours/:id`, updateTour);
-  fastify.delete(`${config.app.apiPath}tours/:id`, deleteTour);
+  fastify.put(`${config.app.apiPath}tours/:tourId`, updateActiveTour);
+  fastify.delete(`${config.app.apiPath}tours/:tourId`, deleteActiveTour);
 
   done();
 }

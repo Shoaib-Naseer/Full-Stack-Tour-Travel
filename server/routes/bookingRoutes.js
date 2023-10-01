@@ -58,6 +58,7 @@ const errorResponseSchema = {
 
 const createBooking = {
   schema: {
+    tags: ["Bookings"],
     params:BookingParamsSchema,
     body: bookingBodySchema,
     // response: {
@@ -70,6 +71,7 @@ const createBooking = {
 
 const getBookingsForTour = {
     schema: {
+      tags: ["Bookings"],
       params:BookingParamsSchema,
     //   response: {
     //     200: { type: 'array', items: bookingResponseSchema },
@@ -81,6 +83,7 @@ const getBookingsForTour = {
 
   const getBookingsForUser = {
     schema: {
+      tags: ["Bookings"],
       params:userParamsSchema ,
     //   response: {
     //     200: { type: 'array', items: bookingResponseSchema },
@@ -92,6 +95,7 @@ const getBookingsForTour = {
 
   const getAllBookings = {
     schema: {
+      tags: ["Bookings"],
     //   response: {
     //     200: { type: 'array', items: bookingResponseSchema },
     //     400: helper.errorMessage,
@@ -102,6 +106,7 @@ const getBookingsForTour = {
 
   const getBookingByUserAndTour = {
     schema: {
+      tags: ["Bookings"],
       params: userTourParamsSchema,
     //   response: {
     //     200: bookingResponseSchema,

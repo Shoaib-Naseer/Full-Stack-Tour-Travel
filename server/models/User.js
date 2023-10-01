@@ -31,7 +31,7 @@ module.exports = (Sequelize, DataTypes) => {
     },
     registrationDate: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: () => new Date(),
     },
     last_login: {
       type: DataTypes.DATE,

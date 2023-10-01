@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Category } = require("../models");
 
 async function getAllCategories() {
@@ -5,7 +6,7 @@ async function getAllCategories() {
 }
 
 async function createCategory(name) {
-  return Category.create({ name });
+  return Category.create({ name:name });
 }
 
 async function updateCategory(id, name) {
@@ -28,6 +29,12 @@ async function getCategory(id) {
   return category;
 }
 
+async function findMultipleCategories(ids) {
+  return await Category.findAll({
+    where: { category_id: { [Op.in]: ids } },
+  });
+}
+
 async function deleteCategory(id) {
   const category = await Category.findOne({ where: { category_id: id } });
   await category.destroy();
@@ -40,4 +47,5 @@ module.exports = {
   updateCategory,
   getCategory,
   deleteCategory,
+  findMultipleCategories
 };

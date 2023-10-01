@@ -38,18 +38,19 @@ const tourIdImageIdParams = {
 
 const uploadImages = {
   schema: {
-    params: tourIdParams,
+    tags: ["Images"],
   },
   response: {
-    201: imageResponseSchema,
     400: helper.errorMessage,
   },
   handler: tourImagesConroller.uploadImages,
 };
 
 const getAllImages = {
+  schema: {
+    tags: ["Images"],
+  },
   response: {
-    200: imageResponseSchema,
     400: helper.errorMessage,
     404: helper.errorMessage,
   },
@@ -59,10 +60,9 @@ const getAllImages = {
 
 const getAllImagesForTour = {
   schema: {
-    params: tourIdParams,
+    tags: ["Images"],
   },
   response: {
-    200: imageResponseSchema,
     400: helper.errorMessage,
     404: helper.errorMessage,
   },
@@ -71,10 +71,9 @@ const getAllImagesForTour = {
 
 const deleteSingleTourImage = {
   schema: {
-    params: tourIdImageIdParams,
+    tags: ["Images"],
   },
   response: {
-    200: imageResponseSchema,
     400: helper.errorMessage,
     404: helper.errorMessage,
   },
@@ -83,10 +82,9 @@ const deleteSingleTourImage = {
 
 const deleteAllTourImages = {
   schema: {
-    params: tourIdParams,
+    tags: ["Images"],
   },
   response: {
-    200: imageResponseSchema,
     400: helper.errorMessage,
     404: helper.errorMessage,
   },

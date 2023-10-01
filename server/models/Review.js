@@ -31,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
   Review.associate = function (models) {
     Review.belongsTo(models.Tour, {
       foreignKey: "tour_id",
-      onDelete: "CASCADE", // Adjust the deletion behavior as needed
+      onDelete: "CASCADE", 
     });
     Review.belongsTo(models.User, {
       foreignKey: "user_id",
-      onDelete: "CASCADE", // Adjust the deletion behavior as needed
+      onDelete: "CASCADE",
     });
   };
 

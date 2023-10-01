@@ -1,25 +1,45 @@
-const { Tour, Image } = require("../models");
-
-async function getAllTours() {
-  return await Tour.findAll({
-    include: {
-      model: Image,
-      attributes: ["url", "image_id"],
-    },
-  });
-}
+const { Op } = require("sequelize");
+const {
+  Tour,
+  Image,
+  Category,
+  PickupLocation,
+  BasicTour,
+} = require("../models");
 
 async function createTour(tourData) {
-  const createdTour = await Tour.create(tourData);
-  return createdTour;
+  return await Tour.create(tourData);
+}
+
+async function setTourPickupLocations(tour, pickupLocationIds) {
+  const pickupLocations = await PickupLocation.findAll({
+    where: { pickup_location_id: { [Op.in]: pickupLocationIds } },
+  });
+  await tour.setPickupLocations(pickupLocations);
+}
+
+async function setTourCategories(tour, categoryIds) {
+  const categories = await Category.findAll({
+    where: { category_id: { [Op.in]: categoryIds } },
+  });
+  await tour.setCategories(categories);
 }
 
 async function getTourById(id) {
   return await Tour.findByPk(id, {
-    include: {
-      model: Image,
-      attributes: ["url", "image_id"],
-    },
+    include: [
+      {
+        model: Image,
+        as: "Images",
+        attributes: ["url", "image_id"],
+      },
+      { model: BasicTour, attributes: ["name"] },
+      {
+        model: PickupLocation,
+        through: "TourPickupLocations",
+        as: "PickupLocations",
+      },
+    ],
   });
 }
 
@@ -40,9 +60,10 @@ async function deleteTour(id) {
 }
 
 module.exports = {
-  getAllTours,
   createTour,
   getTourById,
   updateTour,
   deleteTour,
+  setTourPickupLocations,
+  setTourCategories,
 };

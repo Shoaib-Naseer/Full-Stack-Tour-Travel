@@ -13,6 +13,7 @@ const Category = {
 
 const getCategories = {
   schema: {
+    tags: ["Categories"],
     response: {
       400: helper.errorMessage,
     },
@@ -22,7 +23,7 @@ const getCategories = {
 
 const createCategory = {
   schema: {
-    body:Category,
+    tags: ["Categories"],
     response: {
       400: helper.errorMessage,
     },
@@ -32,13 +33,7 @@ const createCategory = {
 
 const updateCategory = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
-    body: Category,
+    tags: ["Categories"],
     response: {
       404: helper.errorMessage,
       400: helper.errorMessage,
@@ -49,12 +44,7 @@ const updateCategory = {
 
 const getCategory = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    tags: ["Categories"],
     response: {
       404: helper.errorMessage,
       400: helper.errorMessage,
@@ -65,12 +55,7 @@ const getCategory = {
 
 const deleteCategory = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    tags: ["Categories"],
     response: {
       404: helper.errorMessage,
     },

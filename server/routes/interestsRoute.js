@@ -6,16 +6,18 @@ const Interest = {
   type: "object",
   properties: {
     name: { type: "string" },
+    description: { type: "string" },
   },
+  required: ["name"],
 };
 
 const getInterests = {
   schema: {
     response: {
-      200: {
-        type: "array",
-        interests: Interest,
-      },
+      // 200: {
+      //   type: "array",
+      //   interests: Interest,
+      // },
       400:helper.errorMessage
     },
   },
@@ -24,9 +26,9 @@ const getInterests = {
 
 const createInterest = {
   schema: {
-    body: {...Interest, required:['name']},
+    // body: Interest,
     response: {
-      201: Interest,
+      // 201: Interest,
       400:helper.errorMessage
     },
   },
@@ -35,15 +37,15 @@ const createInterest = {
 
 const updateInterest = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
-    body: Interest,
+    // params: {
+    //   type: "object",
+    //   properties: {
+    //     id: { type: "integer" },
+    //   },
+    // },
+    // body: Interest,
     response: {
-      200: Interest,
+      // 200: Interest,
       404:helper.errorMessage,
       400:helper.errorMessage
     },
@@ -53,12 +55,12 @@ const updateInterest = {
 
 const getInterest = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    // params: {
+    //   type: "object",
+    //   properties: {
+    //     id: { type: "integer" },
+    //   },
+    // },
     response: {
       404:helper.errorMessage,
       400: helper.errorMessage,
@@ -69,19 +71,19 @@ const getInterest = {
 
 const deleteInterest = {
   schema: {
-    params: {
-      type: "object",
-      properties: {
-        id: { type: "integer" },
-      },
-    },
+    // params: {
+    //   type: "object",
+    //   properties: {
+    //     id: { type: "integer" },
+    //   },
+    // },
     response: {
-      200: {
-        type: "object",
-        properties: {
-          message: { type: "string" },
-        },
-      },
+      // 200: {
+      //   type: "object",
+      //   properties: {
+      //     message: { type: "string" },
+      //   },
+      // },
       404:helper.errorMessage,
     },
   },

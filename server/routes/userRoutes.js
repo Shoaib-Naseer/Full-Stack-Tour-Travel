@@ -13,6 +13,7 @@ const userParamsSchema = {
 
 const getAllUsers = {
   schema:{
+    tags: ["Users"],
     response: {
       400: helper.errorMessage,
     }
@@ -22,6 +23,7 @@ const getAllUsers = {
 
 const getUserById = {
   schema: {
+    tags: ["Users"],
     params: userParamsSchema,
     response: {
       400: helper.errorMessage,
@@ -33,6 +35,7 @@ const getUserById = {
 
 const deleteUserById = {
   schema: {
+    tags: ["Users"],
     params: userParamsSchema,
     response: {
       400: helper.errorMessage,
@@ -44,6 +47,7 @@ const deleteUserById = {
 
 const uploadProfilePicture = {
   schema: {
+    tags: ["Users"],
     params: userParamsSchema,
     response: {
       400: helper.errorMessage,
