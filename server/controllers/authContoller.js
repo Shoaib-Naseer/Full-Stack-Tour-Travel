@@ -1,6 +1,8 @@
 const authService = require("../services/authService");
 const userService = require("../services/userService");
 const tokenUtils = require("../utils/tokenUtils")
+const responseUtils = require("../utils/responseUtils");
+
 
 const register = async (req, reply) => {
   try {
@@ -19,7 +21,7 @@ const register = async (req, reply) => {
     const accessToken = tokenUtils.generateAccessToken(newUser);
     reply.code(201).send({ message: "success", data: { accessToken } });
   } catch (error) {
-    reply.code(400).send({ message: "failure", error: error.message });
+    responseUtils.sendFailureResponse(reply, error.message);
   }
 };
 
@@ -43,7 +45,7 @@ const login = async (req, reply) => {
       .code(200)
       .send({ messgae: "success", data: { accessToken, refreshToken } });
   } catch (error) {
-    reply.code(400).send({ message: "failure", error: error.message });
+    responseUtils.sendFailureResponse(reply, error.message);
   }
 };
 
@@ -59,7 +61,7 @@ const logout = async (req, reply) => {
     const accessToken = await authService.logutUser(user);
     reply.code(200).send({ message: "success", data: { accessToken } });
   } catch (error) {
-    reply.code(400).send({ message: "failure", error: error.message });
+    responseUtils.sendFailureResponse(reply, error.message);
   }
 };
 

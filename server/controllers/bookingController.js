@@ -1,6 +1,8 @@
 const userService = require("../services/userService");
 const tourService = require("../services/tourService");
 const paymentService = require("../services/paymentService");
+const responseUtils = require("../utils/responseUtils");
+
 
 async function createBooking(req, reply) {
   try {
@@ -48,7 +50,7 @@ async function createBooking(req, reply) {
 
     return reply.status(201).json({ message: "success", data: { booking } });
   } catch (error) {
-    return reply.code(400).send({ message: "failure", error: error.message });
+    return responseUtils.sendFailureResponse(reply, error.message);
   }
 }
 
@@ -59,7 +61,7 @@ async function getBookingsForTour(req, reply) {
     const bookings = await BookingService.getBookingsForTour(tourId);
     return reply.status(200).json({ message: "success", data: { bookings } });
   } catch (error) {
-    reply.code(400).send({ message: "failure", error: error.message });
+    responseUtils.sendFailureResponse(reply, error.message);
   }
 }
 

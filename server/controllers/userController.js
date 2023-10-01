@@ -1,4 +1,6 @@
 const userService = require("../services/userService");
+const responseUtils = require("../utils/responseUtils");
+
 
 async function getAllUsers(req, reply) {
   try {
