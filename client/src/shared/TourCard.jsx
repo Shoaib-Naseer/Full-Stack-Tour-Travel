@@ -1,19 +1,32 @@
-import React from 'react';
-import { Card, CardBody } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import calculateAvgRating from '../utils/avgRating';
+import React from "react";
+import { Card, CardBody } from "reactstrap";
+import { Link } from "react-router-dom";
+import calculateAvgRating from "../utils/avgRating";
 import "./tour-card.css";
 
 const TourCard = ({ tour }) => {
-  const { id, title, city, photo, price, featured, reviews } = tour;
-  const {totalRating , avgRating} = calculateAvgRating(reviews);
-  console.log(totalRating,avgRating )
+  console.log(tour)
+ 
+  const { id, title, isBookingOpen: featured } = tour;
+  const {
+    description,
+    location: city,
+    base_price: price,
+    booking_end_date: bookinglastDate,
+  } = tour.Tours[0];
+  const reviews = tour.Tours[0].Reviews;
+  const { url: photo } = tour.Tours[0].Images[0];
+
+  const fastifyBaseUrl = 'http://localhost:8000';
+
+  // const { id, title, city, photo, price, featured, reviews } = tour;
+  const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   return (
     <div className="tour__card | mb-4">
       <Card>
         <div className="tour__img">
-          <img src={photo} alt="tour-img" />
+          <img src={`${fastifyBaseUrl}/${photo}`} alt="tour-img" />
           <span>{featured}</span>
         </div>
 
@@ -27,7 +40,7 @@ const TourCard = ({ tour }) => {
             <span className="tour__rating | d-flex align-items-center gap-1">
               <i className="ri-star-fill"></i>
               {avgRating === 0 ? null : avgRating}
-              {totalRating === 0 ? ("Not Rated"):(<span>{reviews.length}</span>)}
+              {totalRating === 0 ? "Not Rated" : <span>{reviews.length}</span>}
             </span>
           </div>
           <h5 className="tour__title">

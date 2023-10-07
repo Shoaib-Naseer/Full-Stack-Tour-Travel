@@ -15,7 +15,9 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
+    "@fastify/cors": "^8.4.0",
     "@fastify/formbody": "^7.4.0",
+    "@fastify/static": "^6.11.2",
     "@fastify/swagger": "^8.10.0",
     "@fastify/swagger-ui": "^1.9.3",
     "bcrypt": "^5.1.1",

@@ -42,6 +42,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
 
+    Tour.hasMany(models.Review, {
+      foreignKey: 'tour_id',
+      onDelete: 'CASCADE',
+    });
+
     Tour.belongsTo(models.BasicTour, {
       foreignKey: "basic_tour_id",
       onDelete: "CASCADE",  

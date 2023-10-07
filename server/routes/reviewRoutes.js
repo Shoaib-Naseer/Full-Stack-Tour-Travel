@@ -1,6 +1,7 @@
 const config = require("../config");
 const reviewController = require("../controllers/reviewController");
 const helper = require("./helper");
+
 const createReviewSchema = {
   body: {
     type: "object",
@@ -86,9 +87,9 @@ const updateReviewParamsSchema = {
 const getAllReviewsForTour = {
   schema: {
     tags: ["Reviews"],
-    params: tourIdParamSchema,
+    // params: tourIdParamSchema,
     response: {
-      200: { type: "array", items: reviewWithAssociationsSchema },
+      // 200: { type: "array", items: reviewWithAssociationsSchema },
       400: helper.errorMessage,
       404: helper.errorMessage,
     },
@@ -99,9 +100,9 @@ const getAllReviewsForTour = {
 const getAllReviewsForUser = {
   schema: {
     tags: ["Reviews"],
-    params: userIdParamSchema,
+    // params: userIdParamSchema,
     response: {
-      200: { type: "array", items: reviewWithAssociationsSchema },
+      // 200: { type: "array", items: reviewWithAssociationsSchema },
       400: helper.errorMessage,
       404: helper.errorMessage,
     },
@@ -113,7 +114,7 @@ const getAllReviews = {
   schema: {
     tags: ["Reviews"],
     response: {
-      200: { type: "array", items: reviewWithAssociationsSchema },
+      // 200: { type: "array", items: reviewWithAssociationsSchema },
       400: helper.errorMessage,
       404: helper.errorMessage,
     },
@@ -124,7 +125,7 @@ const getAllReviews = {
 const createReview = {
   schema: {
     tags: ["Reviews"],
-    body: createReviewSchema,
+    // body: createReviewSchema,
     params: tourIdParamSchema,
     response: {
       400: helper.errorMessage,
@@ -137,7 +138,7 @@ const updateReview = {
   schema: {
     tags: ["Reviews"],
     params: updateReviewParamsSchema,
-    body: updateReviewSchema,
+    // body: updateReviewSchema,
     response: {
       404: helper.errorMessage,
       400: helper.errorMessage,
@@ -149,7 +150,7 @@ const updateReview = {
 const getReviewById = {
   schema: {
     tags: ["Reviews"],
-    params: reviewIdParamSchema,
+    // params: reviewIdParamSchema,
     response: {
       404: helper.errorMessage,
       400: helper.errorMessage,
@@ -161,7 +162,7 @@ const getReviewById = {
 const deleteReview = {
   schema: {
     tags: ["Reviews"],
-    params: reviewIdParamSchema,
+    // params: reviewIdParamSchema,
     response: {
       400: helper.errorMessage,
       404: helper.errorMessage,

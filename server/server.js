@@ -1,6 +1,8 @@
 let app;
-const cors = require("cors");
+const cors = require("@fastify/cors");
 const config = require("./config");
+const path =require('path')
+
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const interestsRoutes = require("./routes/interestsRoute");
@@ -9,6 +11,7 @@ const imageRoutes = require("./routes/imageRoute");
 
 const fastifySwagger = require("@fastify/swagger");
 const fastifySwaggerUi = require("@fastify/swagger-ui");
+
 const authRoutes = require("./routes/authRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
@@ -52,12 +55,18 @@ const swaggerUiOptions = {
 
 
 
-
+app.register(cors);
 
 app.register(fastifySwagger, swaggerOptions);
 app.register(fastifySwaggerUi, swaggerUiOptions);
 
 app.register(require("fastify-file-upload"));
+
+
+app.register(require('@fastify/static'), {
+  root: path.join(__dirname, 'public'),
+  prefix: '/public/',
+})
 
 app.register(async(fastify, options, done) => {
   routeGroups.forEach(({ name, routes }) => {

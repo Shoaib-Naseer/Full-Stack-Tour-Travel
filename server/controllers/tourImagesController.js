@@ -1,5 +1,7 @@
 const tourImageService = require("../services/tourImageService.js");
 const tourService = require("../services/tourService.js");
+const responseUtils = require("../utils/responseUtils");
+
 
 // Upload an image for a tour
 async function uploadImages(req, reply) {

@@ -19,14 +19,13 @@ async function getAllImages() {
 }
 
 async function getSingleImageById(imageId) {
-    const image = await Image.findOne({ where: { image_id: imageId } });
-    return image;
-  
+  const image = await Image.findOne({ where: { image_id: imageId } });
+  return image;
 }
 
 async function uploadImage(files, tourId) {
   try {
-    const dirPath = Path.join(__dirname, "..", `uploads/tours`);
+    const dirPath = Path.join(__dirname, "..", `uploads/images`);
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
@@ -56,7 +55,7 @@ async function deleteSingleImage(imageId) {
     if (!image) {
       throw new Error(`Image with ID ${imageId} not found`);
     }
-    const imageUrl = image.url;
+    const imageUrl = Path.join(__dirname, "..", image.url);
     await image.destroy();
 
     fs.unlink(imageUrl, (err) => {
@@ -76,7 +75,7 @@ async function deleteAllTourImages(tourId) {
     });
     const deletedImageUrls = [];
     for (const image of imagesToDelete) {
-      const imageUrl = image.url;
+      const imageUrl = Path.join(__dirname, "..", image.url);
       await image.destroy();
       // Delete the image file from the server
       fs.unlink(imageUrl, (err) => {
@@ -98,5 +97,5 @@ module.exports = {
   deleteSingleImage,
   getAllImagesForTour,
   getAllImages,
-  getSingleImageById
+  getSingleImageById,
 };

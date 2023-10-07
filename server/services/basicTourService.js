@@ -1,4 +1,4 @@
-const {Tour, BasicTour, PickupLocation, sequelize, Image, Category } = require("../models");
+const {Tour, BasicTour, PickupLocation, sequelize, Image, Category,Review } = require("../models");
 const { Op } = require("sequelize");
 
 async function createBasicTour(data) {
@@ -127,7 +127,7 @@ async function getAllBasicTours() {
 
 async function getAllActiveBasicTours() {
   try {
-    // Fetch all basic tours
+    // Fetch all active basic tours
     const toursWithLatestDetails = await BasicTour.findAll({
       include: [
         {
@@ -140,12 +140,22 @@ async function getAllActiveBasicTours() {
               attributes: ["url", "image_id"],
             },
             {
+              model: Image,
+              as: "Images",
+              attributes: ["url", "image_id"],
+            },
+            {
+              model: Review,
+              as: "Reviews",
+            },
+            {
               model: PickupLocation,
               through: "TourPickupLocations",
               as: "PickupLocations",
             },
             {
               model: Category,
+              through: "TourCategories",
               as: "Categories",
             },
           ],
