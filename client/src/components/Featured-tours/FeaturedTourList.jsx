@@ -1,14 +1,11 @@
 import React from "react";
 import TourCard from "../../shared/TourCard";
-import tourData from "../../assets/data/tours";
 import { Col } from "reactstrap";
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import useFetch from "../../hooks/useFetch";
-import { BASE_URL } from "../../config";
+import { baseUrl } from "../../config";
 
 const FeaturedTourList = () => {
-  const { data: FeaturedTours } = useFetch(`${BASE_URL}/tours`);
+  const { data: FeaturedTours , loading , error } = useFetch(`${baseUrl}tours`);
 
   const formatData = (toursData) => {
     const formattedData = [];
@@ -52,11 +49,14 @@ const FeaturedTourList = () => {
 
     return formattedData;
   };
+
   const toursData = formatData(FeaturedTours);
 
   return (
     <>
-      {toursData.map((tour, index) => {
+    {loading && <h4> Loading ..... </h4>}
+    {error && <h4> {error} </h4>}
+      {!loading && !error && toursData?.map((tour, index) => {
         return (
           <Col lg="3" className="mb-4" key={tour.id}>
             <TourCard tour={tour} />

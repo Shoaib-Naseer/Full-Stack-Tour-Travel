@@ -13,16 +13,19 @@ import customizationImg from '../assets/images/customization.png';
 const servicesData = [
   {
     imgUrl: weatherImg,
+    id:1,
     title: 'Calculate Weather',
     desc: 'lorem ipsum dolor sit amet,  consectetur adipiscing elit'
   },
   {
     imgUrl: guideImg,
+    id:2,
     title: 'Best Tour Guide',
     desc: 'lorem ipsum dolor sit amet,  consectetur adipiscing elit'
   },
   {
     imgUrl: customizationImg,
+    id:3,
     title: 'Customization',
     desc: 'lorem ipsum dolor sit amet,  consectetur adipiscing elit'
   }
@@ -40,7 +43,7 @@ const ServiceList = () => {
           return (
             <Col lg="3">
               <motion.div
-                key={item.title}
+                key={item.id}
                 ref={ref}
                 initial={{ opacity: 0, y: -20 }} // Initial opacity and y position (fade-in from below)
                 animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }} // Fade-in when inView is true

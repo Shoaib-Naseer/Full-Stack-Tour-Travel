@@ -2,7 +2,8 @@ import React from "react";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import calculateAvgRating from "../utils/avgRating";
-import "./tour-card.css";
+import  "./tour-card.css";
+import {fastifyBaseUrl} from "../config";
 
 const TourCard = ({ tour }) => {
   console.log(tour)
@@ -17,7 +18,7 @@ const TourCard = ({ tour }) => {
   const reviews = tour.Tours[0].Reviews;
   const { url: photo } = tour.Tours[0].Images[0];
 
-  const fastifyBaseUrl = 'http://localhost:8000';
+  const baseUrl = fastifyBaseUrl;
 
   // const { id, title, city, photo, price, featured, reviews } = tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
@@ -26,7 +27,7 @@ const TourCard = ({ tour }) => {
     <div className="tour__card | mb-4">
       <Card>
         <div className="tour__img">
-          <img src={`${fastifyBaseUrl}/${photo}`} alt="tour-img" />
+          <img src={`${baseUrl}${photo}`} alt="tour-img" />
           <span>{featured}</span>
         </div>
 
