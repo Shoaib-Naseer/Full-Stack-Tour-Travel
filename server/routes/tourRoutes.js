@@ -56,18 +56,6 @@ const getTour = {
   handler: tourController.getTour,
 };
 
-const getSearchTour = {
-  schema: {
-    // params: tourParamsSchema,
-    response: {
-      // 200: tourResponseSchema,
-      404: helper.errorMessage,
-      400: helper.errorMessage,
-    },
-  },
-  handler: basicTourController.getSearchTours,
-};
-
 const deleteActiveTour = {
   schema: {
     tags: ["Tours"],
@@ -84,7 +72,6 @@ const deleteActiveTour = {
 function tourRoutes(fastify, options, done) {
   fastify.get(`${config.app.apiPath}tours`, getActiveTours);
   fastify.get(`${config.app.apiPath}tours/:tourId`, getTour);
-  fastify.get(`${config.app.apiPath}/tours/search`,getSearchTour);
 
   // admin routes
   fastify.post(`${config.app.apiPath}tours`, createTour);

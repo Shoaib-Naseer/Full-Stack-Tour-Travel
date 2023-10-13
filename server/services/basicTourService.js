@@ -184,71 +184,6 @@ async function getAllActiveBasicTours(searchValue="") {
   }
 }
 
-async function getSearchedActiveBasicTours(searchValue = ""){
-  return await BasicTour.findAll({
-    include: [
-      {
-        model: Tour,
-        as: 'Tours',
-        include: [
-          {
-            model: Image,
-            as: 'Images',
-            attributes: ['url', 'image_id'],
-          },
-          {
-            model: Review,
-            as: 'Reviews',
-          },
-          {
-            model: PickupLocation,
-            through: 'TourPickupLocations',
-            as: 'PickupLocations',
-          },
-          {
-            model: Category,
-            through: 'TourCategories',
-            as: 'Categories',
-          },
-        ],
-        order: [['createdAt', 'DESC']],
-      },
-    ],
-    attributes: {
-      include: [
-        [
-          sequelize.where(
-            sequelize.literal(
-              'CURRENT_DATE BETWEEN "Tours"."booking_start_date" AND "Tours"."booking_end_date"'
-            ),
-            true
-          ),
-          'isBookingOpen',
-        ],
-      ],
-    },
-    where: {
-      [Op.or]: [
-        {
-          '$BasicTours.name$': {
-            [Op.like]: `%${searchValue}%`,
-          },
-        },
-        {
-          '$Tours.location$': {
-            [Op.like]: `%${searchValue}%`,
-          },
-        },
-        {
-          '$Tours.description$': {
-            [Op.like]: `%${searchValue}%`,
-          },
-        },
-      ],
-    },
-  });
-}
-
 module.exports = {
   createBasicTour,
   getBasicTourById,
@@ -258,5 +193,4 @@ module.exports = {
   getAllBasicTours,
   getAllToursByBasicTour,
   getAllActiveBasicTours,
-  getSearchedActiveBasicTours
 };
