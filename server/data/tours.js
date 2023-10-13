@@ -1,9 +1,9 @@
 // seeders/tourSeeder.js
 const toursData = [
   {
-    name: "Tour 1",
-    description: "Description for Tour 1",
-    location: "Location A",
+    name: "Westminister Bridge",
+    description: "Westminister Bridge",
+    location: "London",
     base_price: 100.0,
     limit: 100,
     createdAt: new Date(),
@@ -14,9 +14,9 @@ const toursData = [
     categoryIds: [1],
   },
   {
-    name: "Tour 2",
+    name: "Bali, Indonesia",
     description: "Description for Tour 2",
-    location: "Location B",
+    location: "Indonesia",
     base_price: 150.0,
     limit: 100,
     createdAt: new Date(),
@@ -27,9 +27,9 @@ const toursData = [
     categoryIds: [1,2]
   },
   {
-    name: "Tour 3",
-    description: "Description for Tour 3",
-    location: "Location B",
+    name: "Snowy Mountains, Thailand",
+    description: "Snowy Mountains, Thailand",
+    location: "Thailand",
     base_price: 150.0,
     limit: 100,
     createdAt: new Date(),
@@ -40,9 +40,9 @@ const toursData = [
     categoryIds: [1,2]
   },
   {
-    name: "Tour 4",
-    description: "Description for Tour 4",
-    location: "Location B",
+    name: "Beautiful Sunrise, Thailand",
+    description: "Beautiful Sunrise, Thailand",
+    location: "Thailand",
     base_price: 150.0,
     limit: 100,
     createdAt: new Date(),
@@ -53,9 +53,9 @@ const toursData = [
     categoryIds: [2]
   },
   {
-    name: "Tour 5",
-    description: "Description for Tour 5",
-    location: "Location B",
+    name: "Nusa Pendia Bali, Indonesia",
+    description: "Nusa Pendia Bali, Indonesia",
+    location: "Indonesia",
     base_price: 150.0,
     limit: 100,
     createdAt: new Date(),
@@ -66,9 +66,9 @@ const toursData = [
     categoryIds: [1]
   },
   {
-    name: "Tour 6",
-    description: "Description for Tour 6",
-    location: "Location B",
+    name: "Cherry Blossoms Spring",
+    description: "Cherry Blossoms Spring",
+    location: "Japan",
     base_price: 150.0,
     limit: 100,
     createdAt: new Date(),
@@ -78,9 +78,9 @@ const toursData = [
     pickupLocationIds: [1, 2],
   },
   {
-    name: "Tour 7",
-    description: "Description for Tour 7",
-    location: "Location B",
+    name: "Holmen Lofoten",
+    description: "Holmen Lofoten",
+    location: "France",
     base_price: 150.0,
     limit: 100,
     createdAt: new Date(),

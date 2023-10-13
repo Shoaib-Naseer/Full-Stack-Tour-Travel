@@ -125,7 +125,7 @@ async function getAllBasicTours() {
   }
 }
 
-async function getAllActiveBasicTours() {
+async function getAllActiveBasicTours(searchValue="") {
   try {
     // Fetch all active basic tours
     const toursWithLatestDetails = await BasicTour.findAll({
@@ -134,11 +134,6 @@ async function getAllActiveBasicTours() {
           model: Tour,
           as: 'Tours',
           include: [
-            {
-              model: Image,
-              as: "Images",
-              attributes: ["url", "image_id"],
-            },
             {
               model: Image,
               as: "Images",
@@ -173,14 +168,85 @@ async function getAllActiveBasicTours() {
             ),
             'isBookingOpen',
           ],
-        ],
+        ]
       },
+      where: sequelize.where(
+        sequelize.fn('LOWER', sequelize.col('BasicTour.name')),
+        {
+          [Op.like]: `%${searchValue.toLowerCase()}%`,
+        }
+      ),
     });
 
     return toursWithLatestDetails;
   } catch (error) {
     throw error;
   }
+}
+
+async function getSearchedActiveBasicTours(searchValue = ""){
+  return await BasicTour.findAll({
+    include: [
+      {
+        model: Tour,
+        as: 'Tours',
+        include: [
+          {
+            model: Image,
+            as: 'Images',
+            attributes: ['url', 'image_id'],
+          },
+          {
+            model: Review,
+            as: 'Reviews',
+          },
+          {
+            model: PickupLocation,
+            through: 'TourPickupLocations',
+            as: 'PickupLocations',
+          },
+          {
+            model: Category,
+            through: 'TourCategories',
+            as: 'Categories',
+          },
+        ],
+        order: [['createdAt', 'DESC']],
+      },
+    ],
+    attributes: {
+      include: [
+        [
+          sequelize.where(
+            sequelize.literal(
+              'CURRENT_DATE BETWEEN "Tours"."booking_start_date" AND "Tours"."booking_end_date"'
+            ),
+            true
+          ),
+          'isBookingOpen',
+        ],
+      ],
+    },
+    where: {
+      [Op.or]: [
+        {
+          '$BasicTours.name$': {
+            [Op.like]: `%${searchValue}%`,
+          },
+        },
+        {
+          '$Tours.location$': {
+            [Op.like]: `%${searchValue}%`,
+          },
+        },
+        {
+          '$Tours.description$': {
+            [Op.like]: `%${searchValue}%`,
+          },
+        },
+      ],
+    },
+  });
 }
 
 module.exports = {
@@ -192,4 +258,5 @@ module.exports = {
   getAllBasicTours,
   getAllToursByBasicTour,
   getAllActiveBasicTours,
+  getSearchedActiveBasicTours
 };

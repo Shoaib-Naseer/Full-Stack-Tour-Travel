@@ -13,7 +13,8 @@ async function getAllBasicTours(req, reply) {
 
 async function getAllActiveBasicTours(req, reply) {
   try {
-    const tours = await basicTourService.getAllActiveBasicTours();
+    const { location="" } = req.query;
+    const tours = await basicTourService.getAllActiveBasicTours(location);
     responseUtils.sendSuccessResponse(reply, tours);
   } catch (error) {
     console.error(error);
@@ -65,10 +66,23 @@ async function deleteBasicTour(req, reply) {
     responseUtils.sendFailureResponse(reply, error.message);
   }
 }
+
+async function getSearchTours(req, reply) {
+  
+  try {
+    // const { location } = req.query;
+    // const tours = await basicTourService.getSearchedActiveBasicTours(location);
+    responseUtils.sendSuccessResponse(reply, "location");
+  } catch (error) {
+    console.error(error);
+    responseUtils.sendFailureResponse(reply, error.message);
+  }
+}
 module.exports = {
   updateBasicTour,
   deleteBasicTour,
   getAllBasicTours,
   getAllToursByBasicTour,
   getAllActiveBasicTours,
+  getSearchTours
 };
