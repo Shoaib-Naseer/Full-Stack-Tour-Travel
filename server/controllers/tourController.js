@@ -4,6 +4,7 @@ const pickupLocationService = require("../services/pickupLocationService");
 const categoryService = require("../services/categoryService");
 
 const responseUtils = require("../utils/responseUtils");
+const { getFileURL } = require("../utils/upload");
 
 async function createTour(req, reply) {
   const errorMessages = [];
@@ -63,8 +64,13 @@ async function getTour(req, reply) {
     const tour = await tourService.getTourById(tourId);
     if (!tour) {
       responseUtils.sendNotFoundResponse(reply, "Tour not found");
-      return;
+      return; 
     }
+    tour.Images.forEach(image => {
+      if (image.url) {
+        image.url = getFileURL(image.url);
+      }
+    });
     responseUtils.sendSuccessResponse(reply, tour);
   } catch (error) {
     console.error(error);

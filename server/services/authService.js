@@ -5,7 +5,7 @@ const config = require("../config");
 
 const registerUser = async (userData) => {
   const {
-    username,
+    userName,
     email,
     password,
     gender,
@@ -15,7 +15,7 @@ const registerUser = async (userData) => {
   } = userData;
   const hashedPassword = await bcrypt.hash(password, config.jwt.saltRounds);
   const user = await User.create({
-    username,
+    userName,
     email,
     password: hashedPassword,
     gender,

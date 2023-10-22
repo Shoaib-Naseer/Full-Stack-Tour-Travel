@@ -5,6 +5,8 @@ const {
   Category,
   PickupLocation,
   BasicTour,
+  Review,
+  User
 } = require("../models");
 
 async function createTour(tourData) {
@@ -38,6 +40,16 @@ async function getTourById(id) {
         model: PickupLocation,
         through: "TourPickupLocations",
         as: "PickupLocations",
+      },
+      {
+        model: Review,
+        as: "Reviews",
+        include: [ 
+          {
+            model: User,
+            as:"User"
+          },
+        ],
       },
     ],
   });

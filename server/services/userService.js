@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Role } = require("../models");
 const fs = require("fs");
 const path = require("path");
 
@@ -24,7 +24,7 @@ async function getUserById(userId) {
 }
 
 async function getUserByEmail(email) {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email }, include: Role });
   return user;
 }
 

@@ -40,7 +40,7 @@ const reviewWithAssociationsSchema = {
       type: "object",
       properties: {
         user_id: { type: "integer" },
-        username: { type: "string" },
+        userName: { type: "string" },
         email: { type: "string" },
       },
     },

@@ -7,20 +7,32 @@ import avatar from '../assets/images/avatar.jpg';
 import Booking from '../components/Booking/Booking';
 
 import '../styles/tour-details.css';
+import useFetch from '../hooks/useFetch';
+import { baseUrl } from '../config';
 
 const TourDetails = () => {
-  const { id } = useParams();
-
+  const {id} = useParams();
+  const {data: toursData, loading , error } = useFetch(`${baseUrl}tours/${id}`)
   const reviewMsgRef = useRef('');
+
+  const formattedTour = {
+    desc:toursData.description,
+    location: toursData.location,
+    reviews:toursData.Reviews,
+    price:toursData.base_price,
+  }
 
   const [tourRatings, setTourRatings] = useState(null);
   const [hoveredRating, setHoveredRating] = useState(null);
 
-  const tour = tourData.find((tour) => tour.id === id);
   // Format date
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  const photo = toursData.Images[0].url;
+  const title = toursData.BasicTour.name;
+  const { desc, price, reviews, location  } = formattedTour;
 
-  const { photo, title, desc, price, reviews, city, distance, address, maxGroupSize } = tour;
+  // const { photo, title, desc, price, reviews, city:location, distance, address, maxGroupSize } = tour;
+
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   // Submit request to server
@@ -52,24 +64,24 @@ const TourDetails = () => {
                     {totalRating === 0 ? 'Not Rated' : <span>{reviews?.length}</span>}
                   </span>
 
-                  <span>
+                  {/* <span>
                     <i className="ri-map-pin-fill"></i> {address}
-                  </span>
+                  </span> */}
                 </div>
 
                 <div className="tour__extra-details | d-flex align-items-center">
                   <span>
-                    <i className="ri-map-pin-2-line"></i> {city}
+                    <i className="ri-map-pin-2-line"></i> {location}
                   </span>
                   <span>
                     <i className="ri-money-dollar-circle-line"></i> $ {price} / per person
                   </span>
-                  <span>
+                  {/* <span>
                     <i className="ri-map-pin-time-line"></i> {distance} k/m
-                  </span>
-                  <span>
+                  </span> */}
+                  {/* <span>
                     <i className="ri-group-line"></i> {maxGroupSize}
-                  </span>
+                  </span> */}
                 </div>
                 <h5>Description</h5>
                 <p>{desc}</p>
@@ -104,21 +116,21 @@ const TourDetails = () => {
                 </Form>
 
                 <ListGroup className="user__reviews">
-                  {reviews?.map((review,index) => (
-                    <div className="review__item" key={index}>
+                  {reviews?.map((review) => (
+                    <div className="review__item" key={review.review_id}>
                       <img src={avatar} alt="user profile avatar" />
                       <div className="w-100">
                         <div className="d-flex align-items-center justify-content-between">
                           <div>
                             <h5>Muhib</h5>
-                            <p> {new Date('08-31-2023').toLocaleDateString('en-US', options)} </p>
+                            <p> {new Date(review.createdAt).toLocaleDateString('en-US', options)} </p>
                           </div>
                           <span className="d-flex align-items-center">
-                            5 <i className="ri-star-s-fill"></i>
+                            {review.rating} <i className="ri-star-s-fill"></i>
                           </span>
                         </div>
 
-                        <h6>Amazing tour</h6>
+                        <h6>{review.comment}</h6>
                       </div>
                     </div>
                   ))}

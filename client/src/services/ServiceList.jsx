@@ -41,9 +41,8 @@ const ServiceList = () => {
             threshold: 0.7
           });
           return (
-            <Col lg="3">
+            <Col lg="3"  key={item.id}>
               <motion.div
-                key={item.id}
                 ref={ref}
                 initial={{ opacity: 0, y: -20 }} // Initial opacity and y position (fade-in from below)
                 animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }} // Fade-in when inView is true

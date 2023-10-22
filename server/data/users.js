@@ -1,6 +1,6 @@
 const usersData = [
   {
-    username: "adminUser",
+    userName: "adminUser",
     email: "admin@example.com",
     password: "adminPassword",
     gender: "Male",
@@ -12,7 +12,7 @@ const usersData = [
     updatedAt: new Date(), // Provide a valid updatedAt value
   },
   {
-    username: "user1",
+    userName: "user1",
     email: "user1@example.com",
     password: "user1Password",
     gender: "Female",
@@ -24,7 +24,7 @@ const usersData = [
     updatedAt: new Date(), // Provide a valid updatedAt value
   },
   {
-    username: "user2",
+    userName: "user2",
     email: "user2@example.com",
     password: "user2Password",
     gender: "Female",

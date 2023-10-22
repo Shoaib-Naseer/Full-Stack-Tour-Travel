@@ -38,12 +38,19 @@ const login = async (req, reply) => {
       return reply
         .code(400)
         .send({ message: "failure", error: "Invalid Credentials" });
-       
+    
+        const userWithoutPassword = {
+          id: user.id, // Include other properties you want to expose
+          email: user.email,
+          userName:user.userName,
+          role: user.Role.name
+          // Add other properties here
+        };
     const accessToken = tokenUtils.generateAccessToken(user);
     const refreshToken = tokenUtils.generateRefreshToken(user);
     reply
       .code(200)
-      .send({ messgae: "success", data: { accessToken, refreshToken } });
+      .send({ messgae: "success", data: { accessToken, refreshToken,user:userWithoutPassword } });
   } catch (error) {
     responseUtils.sendFailureResponse(reply, error.message);
   }

@@ -14,12 +14,12 @@ const loginUserBodySchema = {
 
 const registerUserBodySchema = {
   type: "object",
-  required: ["username", "gender", "email", "password"],
+  required: ["userName", "gender", "email", "password","birthdate"],
   properties: {
     email: { type: "string", format: "email" },
     password: { type: "string" },
     gender: { type: "string", enum: ['male', 'female', 'other'] },
-    username: { type: "string" },
+    userName: { type: "string" },
     birthdate: { type: "string", format: "date" },
     location: { type: "string" },
     profile_image: { type: "string" },
