@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './booking.css';
 import { Form, FormGroup, ListGroup, ListGroupItem } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 const Booking = ({ tour, avgRating }) => {
     
-  const { price, reviews } = tour;
-  const navigate = useNavigate()
+  const { base_price:price, Reviews:reviews } = tour;
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const [credentials,setCredentials] = useState({
-    userId:'01',
-    userEmail:'example@gmail.com',
-    fullName:'',
+    userId:user.id,
+    userEmail:user.email,
+    fullName:user.userName,
     phone:'',
     guestSize:1,
     bookAt:''
@@ -27,7 +29,7 @@ const Booking = ({ tour, avgRating }) => {
   const handleClick = e=>{
     e.preventDefault()
     console.log(credentials)
-    navigate('/thank-you')
+    // navigate('/thank-you')
   }
 
   return (
@@ -48,6 +50,7 @@ const Booking = ({ tour, avgRating }) => {
           <FormGroup>
             <input
               onChange={handleChange}
+              value={credentials.fullName}
               type="text"
               id="fullName"
               placeholder="Full Name"

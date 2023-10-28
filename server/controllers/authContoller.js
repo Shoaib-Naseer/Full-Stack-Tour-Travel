@@ -1,8 +1,7 @@
 const authService = require("../services/authService");
 const userService = require("../services/userService");
-const tokenUtils = require("../utils/tokenUtils")
+const tokenUtils = require("../utils/tokenUtils");
 const responseUtils = require("../utils/responseUtils");
-
 
 const register = async (req, reply) => {
   try {
@@ -38,19 +37,22 @@ const login = async (req, reply) => {
       return reply
         .code(400)
         .send({ message: "failure", error: "Invalid Credentials" });
-    
-        const userWithoutPassword = {
-          id: user.id, // Include other properties you want to expose
-          email: user.email,
-          userName:user.userName,
-          role: user.Role.name
-          // Add other properties here
-        };
+
+    const userWithoutPassword = {
+      id: user.user_id,
+      email: user.email,
+      userName: user.userName,
+      role: user.Role.name,
+      // Add other properties here
+    };
     const accessToken = tokenUtils.generateAccessToken(user);
     const refreshToken = tokenUtils.generateRefreshToken(user);
     reply
       .code(200)
-      .send({ messgae: "success", data: { accessToken, refreshToken,user:userWithoutPassword } });
+      .send({
+        messgae: "success",
+        data: { accessToken, refreshToken, user: userWithoutPassword },
+      });
   } catch (error) {
     responseUtils.sendFailureResponse(reply, error.message);
   }
