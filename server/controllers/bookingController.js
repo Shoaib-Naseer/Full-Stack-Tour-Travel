@@ -1,8 +1,8 @@
 const userService = require("../services/userService");
 const tourService = require("../services/tourService");
+const bookingService = require("../services/bookingService");
 const paymentService = require("../services/paymentService");
 const responseUtils = require("../utils/responseUtils");
-
 
 async function createBooking(req, reply) {
   try {
@@ -86,6 +86,19 @@ async function getAllBookings(req, reply) {
   }
 }
 
+async function hasBookedTour(req, reply) {
+  try {
+    const { userId: user_id, tourId: tour_id } = req.params;
+    const hasBooked = await bookingService.getBookingByUserAndTour(
+      user_id,
+      tour_id,
+    );
+    return responseUtils.sendSuccessResponse(reply, hasBooked, 200);
+  } catch (error) {
+    return responseUtils.sendFailureResponse(reply, error.message);
+  }
+}
+
 // Function to get a specific booking based on user and tour ID
 async function getBookingByUserAndTour(req, reply) {
   try {
@@ -114,4 +127,5 @@ module.exports = {
   getBookingsForUser,
   getAllBookings,
   getBookingByUserAndTour,
+  hasBookedTour
 };

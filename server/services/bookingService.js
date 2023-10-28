@@ -1,5 +1,4 @@
-const Booking = require("../models/Booking");
-const Tour = require("../models/Tour");
+const {Tour,Booking,User,Payment} = require("../models");
 
 async function checkTourLimit(tour_id, group_size) {
   try {

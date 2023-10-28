@@ -6,7 +6,7 @@ const usersData = [
     gender: "Male",
     birthdate: new Date("1990-01-01"),
     location: "City A, Country X",
-    profile_image: "../uploads/images/ava-1.jpg",
+    profile_image: "/public/images/ava-1.jpg",
     role_id: 1,
     createdAt: new Date(), // Provide a valid createdAt value
     updatedAt: new Date(), // Provide a valid updatedAt value
@@ -18,7 +18,7 @@ const usersData = [
     gender: "Female",
     birthdate: new Date("1995-05-15"),
     location: "City B, Country Y",
-    profile_image: "../uploads/images/ava-2.jpg",
+    profile_image: "/public/images/ava-2.jpg",
     role_id: 2,
     createdAt: new Date(), // Provide a valid createdAt value
     updatedAt: new Date(), // Provide a valid updatedAt value
@@ -30,7 +30,7 @@ const usersData = [
     gender: "Female",
     birthdate: new Date("1995-05-15"),
     location: "City B, Country Y",
-    profile_image: "../uploads/images/ava-3.jpg",
+    profile_image: "/public/images/ava-3.jpg",
     role_id: 2,
     createdAt: new Date(), // Provide a valid createdAt value
     updatedAt: new Date(), // Provide a valid updatedAt value

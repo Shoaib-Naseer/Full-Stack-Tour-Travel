@@ -64,11 +64,18 @@ async function getTour(req, reply) {
     const tour = await tourService.getTourById(tourId);
     if (!tour) {
       responseUtils.sendNotFoundResponse(reply, "Tour not found");
-      return; 
+      return;
     }
-    tour.Images.forEach(image => {
+    tour.Images.forEach((image) => {
       if (image.url) {
         image.url = getFileURL(image.url);
+      }
+    });
+    // Update user images
+    tour.Reviews.forEach((review) => {
+      const user = review.User;
+      if (user.profile_image) {
+        user.profile_image = getFileURL(user.profile_image);
       }
     });
     responseUtils.sendSuccessResponse(reply, tour);

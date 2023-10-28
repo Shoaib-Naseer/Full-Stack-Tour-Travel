@@ -104,6 +104,17 @@ const getBookingsForTour = {
     handler: bookingController.getAllBookings,
   };
 
+  const hasBooking = {
+    schema: {
+      tags: ["Bookings"],
+    //   response: {
+    //     200: { type: 'array', items: bookingResponseSchema },
+    //     400: helper.errorMessage,
+    //   },
+    },
+    handler: bookingController.hasBookedTour,
+  };
+
   const getBookingByUserAndTour = {
     schema: {
       tags: ["Bookings"],
@@ -119,6 +130,7 @@ const getBookingsForTour = {
 
 function bookingRoutes(fastify, options, done) {
   fastify.get(`${config.app.apiPath}bookings`, getAllBookings);
+  fastify.get(`${config.app.apiPath}bookings/hasBooking/:tourId/:userId`, hasBooking);
   fastify.post(`${config.app.apiPath}/bookings/:tourId`, createBooking);
   fastify.get(`${config.app.apiPath}/bookings/tours/:tourId`, getBookingsForTour);
   fastify.get(`${config.app.apiPath}/bookings/users/:userId`, getBookingsForUser);  
