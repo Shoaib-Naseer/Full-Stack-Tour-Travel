@@ -9,8 +9,6 @@ import { AuthContext } from "../../context/AuthContext";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log("🚀 ~ file: Header.jsx:12 ~ Header ~ user:", user)
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -84,13 +82,13 @@ const Header = () => {
 
             <div className="nav_right | d-none d-md-flex align-items-center gap-4">
               <div className="nav_btns | d-flex align-items-center gap-4">
-              {user ? (
-                  <span>Welcome, {user.userName}</span> 
+                {user ? (
+                  <span>Welcome, {user.userName}</span>
                 ) : (
                   <>
                     <Button className="btn primary__btn">
                       <Link onClick={toggleMobileMenu} to="/login">
-                        Login 
+                        Login
                       </Link>
                     </Button>
                     <Button className="btn secondary__btn">
@@ -132,12 +130,12 @@ const Header = () => {
               ))}
               <div className="nav_btns | d-flex flex-column gap-4 my-4">
                 {user ? (
-                  <span>Welcome, {user.userName}</span> 
+                  <span>Welcome, {user.userName}</span>
                 ) : (
                   <>
                     <Button className="btn primary__btn">
                       <Link onClick={toggleMobileMenu} to="/login">
-                        Login 
+                        Login
                       </Link>
                     </Button>
                     <Button className="btn secondary__btn">

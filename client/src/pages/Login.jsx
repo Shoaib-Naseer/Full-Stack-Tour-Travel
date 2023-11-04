@@ -73,7 +73,6 @@ const Login = () => {
         toast.error(result.error);
         return;
       }
-      console.log(result);
       setAccessToken(result.data.accessToken)
       setUserInfo(result.data.user)
       dispatch({ type: "LOGIN" ,payload: result.data.user});

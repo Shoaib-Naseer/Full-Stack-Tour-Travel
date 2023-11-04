@@ -30,6 +30,7 @@ async function createBooking(req, reply) {
       tour_id,
       group_size,
     );
+    
     if (isTourLimitExceeded) {
       return reply
         .status(400)

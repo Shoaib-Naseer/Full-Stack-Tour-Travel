@@ -29,7 +29,7 @@
 }
 
 .booking__info-form{
-    padding-inline: .5rem;
+    padding: 1rem .5rem;
     border: 1px solid var(--newsletter-color);
     
 }
@@ -62,3 +62,4 @@
     font-size: 1.1rem !important;
     font-weight: bold !important;
 }
+

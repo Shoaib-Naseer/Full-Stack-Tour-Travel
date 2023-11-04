@@ -7,12 +7,23 @@ import { Col, Container, Row, Form, ListGroup } from "reactstrap";
 import calculateAvgRating from "../utils/avgRating";
 import Booking from "../components/Booking/Booking";
 import { AuthContext } from "../context/AuthContext";
+import { stripeApi } from "../config";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+    Elements,
+    CardElement,
+    useStripe,
+    useElements,
+  } from "@stripe/react-stripe-js";
+
 
 const TourInfo = () => {
   const [tourRatings, setTourRatings] = useState(null);
   const [hoveredRating, setHoveredRating] = useState(null);
   const [hasBookedTour, setHasBookedTour] = useState(false);
   const { user } = useContext(AuthContext);
+
+  const stripePromise = loadStripe(stripeApi);
 
   const { id } = useParams();
   const { data, loading, error } = useFetch(`${baseUrl}tours/${id}`);
@@ -137,7 +148,10 @@ const TourInfo = () => {
                       </div>
                     </Form>
                   ) : (
-                    <div>Only Users who have booked the tour can submit review/feedback</div>
+                    <div>
+                      Only Users who have booked the tour can submit
+                      review/feedback
+                    </div>
                   )}
                   <ListGroup className="user__reviews">
                     {data.Reviews?.map((review) => (
@@ -173,7 +187,9 @@ const TourInfo = () => {
             </Col>
 
             <Col lg="4" style={{ padding: 0 }}>
-              <Booking tour={data} avgRating={avgRating} />
+              <Elements stripe={stripePromise}>
+                <Booking tour={data} avgRating={avgRating} />
+              </Elements>
             </Col>
           </Row>
         )}

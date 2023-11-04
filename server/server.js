@@ -16,6 +16,7 @@ const authRoutes = require("./routes/authRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const pickupRoutes = require("./routes/pickupLocationRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 app = require("fastify")();
 
@@ -31,6 +32,7 @@ const routeGroups = [
   { name: "Reviews", routes: reviewRoutes },
   { name: "Users", routes: userRoutes },
   { name: "Pickups", routes: pickupRoutes },
+  {name: "Payments", routes:paymentRoutes}
 ];
 
 const swaggerOptions = {
@@ -42,8 +44,8 @@ const swaggerOptions = {
     },
     host: "localhost",
     tags: routeGroups.map((group) => ({
-      name: group.name, // Use the name of each route group as the tag name
-      description: group.name, // You can set the description to the same as the name or customize it
+      name: group.name, 
+      description: group.name,
     })),
   },
 };
